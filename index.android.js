@@ -14,6 +14,8 @@ import {
   Alert,
   ListView
 } from 'react-native';
+import { List, ListItem } from 'react-native-elements'
+
 
 export default class reactNativeProject extends Component {
 
@@ -78,7 +80,9 @@ export default class reactNativeProject extends Component {
         <View>
           <Button title={this.state.buttonTitle} style={styles.button} onPress={this._getLocation} ref="button" disabled={this.state.buttonDisable} />
         </View>
-        <LocationList />
+        <View>
+          <LocationList />
+        </View>
       </View>
     );
   }
@@ -95,10 +99,12 @@ class LocationList extends Component {
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={(rowData) => <Text>{rowData}</Text>}
-      />
+      <List>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => <ListItem title={rowData} />}
+        />
+      </List>
     );
   }
 }
