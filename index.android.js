@@ -11,7 +11,8 @@ import {
   Text,
   View,
   Button,
-  Alert
+  Alert,
+  ListView
 } from 'react-native';
 
 export default class reactNativeProject extends Component {
@@ -74,8 +75,30 @@ export default class reactNativeProject extends Component {
           Double tap R on your keyboard to reload,{'\n'}
           Shake or press menu button for dev menu
         </Text>
-        <Button title={this.state.buttonTitle} style={styles.Button} onPress={this._getLocation} ref="button" disabled={this.state.buttonDisable} />
+        <View>
+          <Button title={this.state.buttonTitle} style={styles.button} onPress={this._getLocation} ref="button" disabled={this.state.buttonDisable} />
+        </View>
+        <LocationList />
       </View>
+    );
+  }
+}
+
+class LocationList extends Component {
+  constructor() {
+    super();
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+    };
+  }
+
+  render() {
+    return (
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={(rowData) => <Text>{rowData}</Text>}
+      />
     );
   }
 }
@@ -97,8 +120,8 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-  Button: {
-    width: 500
+  button: {
+    width: 100
   }
 });
 
