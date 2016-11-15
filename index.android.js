@@ -14,7 +14,7 @@ import {
   Alert,
   ListView
 } from 'react-native';
-import { List, ListItem } from 'react-native-elements'
+import LocationList from './components/LocationList';
 
 
 export default class reactNativeProject extends Component {
@@ -24,6 +24,12 @@ export default class reactNativeProject extends Component {
     buttonTitle: 'Loading you location....',
     initialPosition: 'unknown',
     lastPosition: 'unknown',
+    locationsArray: {
+      locations: [
+        'row 3',
+        'row 2'
+      ]
+    }
   };
 
   watchID: ?number = null;
@@ -40,12 +46,10 @@ export default class reactNativeProject extends Component {
 
     this.watchID = navigator.geolocation.watchPosition((position) => {
       var lastPosition = JSON.stringify(position);
-      console.log(lastPosition);
       this.setState({lastPosition});
-      console.log(this.refs.button);
       this.setState({
         buttonDisable: false,
-        buttonTitle: 'Click Bro'
+        buttonTitle: 'Add my location'
       });
     });
   }
@@ -55,13 +59,20 @@ export default class reactNativeProject extends Component {
   }
 
   _getLocation = () => {
-    Alert.alert(
-      'Alert Title',
-      this.state.lastPosition,
-      [
-        {text: 'OK'},
-      ]
-    )
+    // Alert.alert(
+    //   'Alert Title',
+    //   this.state.lastPosition,
+    //   [
+    //     {text: 'OK'},
+    //   ]
+    // )
+    console.log(this.state.locationsArray.locations);
+    var locations = this.state.locationsArray.locations;
+    locations.push(this.state.lastPosition);
+    this.setState({
+      locations: locations
+    });
+    console.log(this.state.locationsArray.locations, this.state.lastPosition);
   }
 
   render() {
@@ -81,30 +92,9 @@ export default class reactNativeProject extends Component {
           <Button title={this.state.buttonTitle} style={styles.button} onPress={this._getLocation} ref="button" disabled={this.state.buttonDisable} />
         </View>
         <View>
-          <LocationList />
+          <LocationList dataSource={this.state.locationsArray.locations} />
         </View>
       </View>
-    );
-  }
-}
-
-class LocationList extends Component {
-  constructor() {
-    super();
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
-    };
-  }
-
-  render() {
-    return (
-      <List>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={(rowData) => <ListItem title={rowData} />}
-        />
-      </List>
     );
   }
 }
@@ -112,7 +102,7 @@ class LocationList extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },

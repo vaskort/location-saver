@@ -11,15 +11,28 @@ import {
   Text,
   View,
   Button,
-  Alert
+  Alert,
+  ListView
 } from 'react-native';
+import LocationList from './components/LocationList';
+
 
 export default class reactNativeProject extends Component {
 
   state = {
+    buttonDisable: true,
+    buttonTitle: 'Loading you location....',
     initialPosition: 'unknown',
     lastPosition: 'unknown',
+    locationsArray: {
+      locations: [
+        'row 3',
+        'row 2'
+      ]
+    }
   };
+
+  watchID: ?number = null;
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
@@ -28,14 +41,16 @@ export default class reactNativeProject extends Component {
         this.setState({initialPosition});
       },
       (error) => alert(JSON.stringify(error)),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      {enableHighAccuracy: true, timeout: 100000, maximumAge: 1000}
     );
 
     this.watchID = navigator.geolocation.watchPosition((position) => {
       var lastPosition = JSON.stringify(position);
       this.setState({lastPosition});
-      this.refs.button.props.disabled = {false};
-      this.refs.button.props.title = "Click bro";
+      this.setState({
+        buttonDisable: false,
+        buttonTitle: 'Add my location'
+      });
     });
   }
 
@@ -44,13 +59,20 @@ export default class reactNativeProject extends Component {
   }
 
   _getLocation = () => {
-    Alert.alert(
-      'Alert Title',
-      this.state.lastPosition,
-      [
-        {text: 'OK'},
-      ]
-    )
+    // Alert.alert(
+    //   'Alert Title',
+    //   this.state.lastPosition,
+    //   [
+    //     {text: 'OK'},
+    //   ]
+    // )
+    console.log(this.state.locationsArray.locations);
+    var locations = this.state.locationsArray.locations;
+    locations.push(this.state.lastPosition);
+    this.setState({
+      locations: locations
+    });
+    console.log(this.state.locationsArray.locations, this.state.lastPosition);
   }
 
   render() {
@@ -66,7 +88,12 @@ export default class reactNativeProject extends Component {
           Double tap R on your keyboard to reload,{'\n'}
           Shake or press menu button for dev menu
         </Text>
-        <Button title="Loading you location...." style={styles.Button} onPress={this._getLocation} ref="button" disabled={true} />
+        <View style={styles.buttonWrapper}>
+          <Button title={this.state.buttonTitle} style={styles.button} onPress={this._getLocation} ref="button" disabled={this.state.buttonDisable} />
+        </View>
+        <View style={styles.locationListWrapper}>
+          <LocationList style={styles.locationList} dataSource={this.state.locationsArray.locations} />
+        </View>
       </View>
     );
   }
@@ -75,9 +102,23 @@ export default class reactNativeProject extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    paddingTop: 20
+  },
+  locationListWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+    paddingTop: 30,
+    alignSelf: 'stretch',
+  },
+  locationList: {
+    alignSelf: 'stretch',
+  },
+  buttonWrapper: {
+    // width: 300
   },
   welcome: {
     fontSize: 20,
@@ -88,9 +129,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
-  },
-  Button: {
-    width: 500
   }
 });
 
