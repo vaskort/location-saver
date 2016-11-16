@@ -10,10 +10,10 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
   Alert,
   ListView
 } from 'react-native';
+import {Button} from 'react-native-elements';
 import LocationList from './components/LocationList';
 
 
@@ -26,8 +26,7 @@ export default class reactNativeProject extends Component {
     lastPosition: 'unknown',
     locationsArray: {
       locations: [
-        'row 3',
-        'row 2'
+        'empty location'
       ]
     }
   };
@@ -76,7 +75,7 @@ export default class reactNativeProject extends Component {
           Click the button to save your location to the list
         </Text>
         <View>
-          <Button title={this.state.buttonTitle} style={styles.button} onPress={this._getLocation} ref="button" disabled={this.state.buttonDisable} />
+          <Button raised icon={{name: 'room'}} title={this.state.buttonTitle} buttonStyle={styles.button} onPress={this._getLocation} ref="button" disabled={this.state.buttonDisable} accessibilityLabel="Add your location"/>
         </View>
         <View style={styles.locationListContainer}>
           <LocationList style={styles.locationList} dataSource={this.state.locationsArray.locations} />
@@ -92,7 +91,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-    paddingTop: 20
+    paddingTop: 20,
   },
   welcome: {
     fontSize: 20,
@@ -110,6 +109,11 @@ const styles = StyleSheet.create({
   },
   locationList: {
     alignSelf: 'stretch'
+  },
+  button: {
+    backgroundColor: '#00998a',
+    borderRadius: 5,
+    marginTop: 20
   }
 });
 

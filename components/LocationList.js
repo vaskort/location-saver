@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
+import { SwipeListView } from 'react-native-swipe-list-view';
 
 class LocationList extends React.Component {
   constructor() {
@@ -13,7 +14,7 @@ class LocationList extends React.Component {
 
     return (
       <List>
-        <ListView
+        <SwipeListView
           dataSource={dataSource}
           renderRow={(rowData) => <ListItem title={rowData} />}
         />
