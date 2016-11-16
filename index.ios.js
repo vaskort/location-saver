@@ -70,20 +70,16 @@ export default class reactNativeProject extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Welcome to locationSaver!
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
+          Click the button to save your location to the list
         </Text>
         <View>
           <Button title={this.state.buttonTitle} style={styles.button} onPress={this._getLocation} ref="button" disabled={this.state.buttonDisable} />
         </View>
-        <View>
-          <LocationList dataSource={this.state.locationsArray.locations} />
+        <View style={styles.locationListContainer}>
+          <LocationList style={styles.locationList} dataSource={this.state.locationsArray.locations} />
         </View>
       </View>
     );
@@ -96,6 +92,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    paddingTop: 20
   },
   welcome: {
     fontSize: 20,
@@ -107,8 +104,12 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-  button: {
-    width: 100
+  locationListContainer: {
+    flex: 1,
+    alignSelf: 'stretch'
+  },
+  locationList: {
+    alignSelf: 'stretch'
   }
 });
 
