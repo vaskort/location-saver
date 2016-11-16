@@ -59,20 +59,11 @@ export default class reactNativeProject extends Component {
   }
 
   _getLocation = () => {
-    // Alert.alert(
-    //   'Alert Title',
-    //   this.state.lastPosition,
-    //   [
-    //     {text: 'OK'},
-    //   ]
-    // )
-    console.log(this.state.locationsArray.locations);
     var locations = this.state.locationsArray.locations;
     locations.push(this.state.lastPosition);
     this.setState({
       locations: locations
     });
-    console.log(this.state.locationsArray.locations, this.state.lastPosition);
   }
 
   render() {
@@ -88,11 +79,11 @@ export default class reactNativeProject extends Component {
           Double tap R on your keyboard to reload,{'\n'}
           Shake or press menu button for dev menu
         </Text>
-        <View style={styles.buttonWrapper}>
+        <View>
           <Button title={this.state.buttonTitle} style={styles.button} onPress={this._getLocation} ref="button" disabled={this.state.buttonDisable} />
         </View>
-        <View style={styles.locationListWrapper}>
-          <LocationList style={styles.locationList} dataSource={this.state.locationsArray.locations} />
+        <View>
+          <LocationList dataSource={this.state.locationsArray.locations} />
         </View>
       </View>
     );
@@ -105,20 +96,6 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-    paddingTop: 20
-  },
-  locationListWrapper: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    paddingTop: 30,
-    alignSelf: 'stretch',
-  },
-  locationList: {
-    alignSelf: 'stretch',
-  },
-  buttonWrapper: {
-    // width: 300
   },
   welcome: {
     fontSize: 20,
@@ -129,6 +106,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  button: {
+    width: 100
   }
 });
 
