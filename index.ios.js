@@ -65,8 +65,8 @@ export default class reactNativeProject extends Component {
     });
   }
 
-  _deleteRow = () => {
-    console.log('damn!');
+  deleteRow() {
+    console.log(this);
   }
 
   render() {
@@ -79,10 +79,21 @@ export default class reactNativeProject extends Component {
           Click the button to save your location to the list
         </Text>
         <View>
-          <Button raised icon={{name: 'room'}} title={this.state.buttonTitle} buttonStyle={styles.button} onPress={this._getLocation} disabled={this.state.buttonDisable} accessibilityLabel="Add your location"/>
+          <Button raised icon={{name: 'room'}}
+            title={this.state.buttonTitle}
+            buttonStyle={styles.button}
+            onPress={this._getLocation}
+            disabled={this.state.buttonDisable}
+            accessibilityLabel="Add your location"
+          />
         </View>
         <View style={styles.locationListContainer}>
-          <LocationList style={styles.locationList} dataSource={this.state.locationsArray.locations} onDelete={this._deleteRow} />
+          <LocationList
+            key={this._data}
+            style={styles.locationList}
+            dataSource={this.state.locationsArray.locations}
+            onDelete={this.deleteRow}
+          />
         </View>
       </View>
     );

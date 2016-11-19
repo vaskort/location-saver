@@ -1,32 +1,38 @@
 import React, { Component } from 'react';
-import { ListView, View, Text, StyleSheet} from 'react-native';
+import { ListView, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { List, ListItem } from 'react-native-elements';
-import { SwipeListView } from 'react-native-swipe-list-view';
+import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 
 class LocationList extends React.Component {
   constructor() {
     super();
   }
 
-  rowDelete() {
-    console.log('yo bro');
+  renderHiddenRow(rowData, sectionID, rowID) {
+    return (
+      <TouchableOpacity
+        style={styles.rowBack}
+        onPress={ _ => console.log(rowID) }>
+            <Text>Delete</Text>
+            <Text
+              style={styles.deleteButton}>
+              Delete
+            </Text>
+      </TouchableOpacity>
+    )
   }
 
   render() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var dataSource = ds.cloneWithRows(this.props.dataSource);
+    var {onDelete} = this.props;
 
     return (
       <List>
         <SwipeListView
           dataSource={dataSource}
           renderRow={(rowData) => <ListItem title={rowData} />}
-          renderHiddenRow={ data => (
-              <View style={styles.rowBack}>
-                  <Text>Delete</Text>
-                  <Text onPress={ this.props.onDelete }>Delete</Text>
-              </View>
-          )}
+          renderHiddenRow={ this.renderHiddenRow }
           leftOpenValue={75}
           rightOpenValue={-75}
           disableRightSwipe={true}
@@ -38,11 +44,11 @@ class LocationList extends React.Component {
 
 const styles = StyleSheet.create({
   deleteButton: {
-    backgroundColor: 'red'
+    color: 'white'
   },
   rowBack: {
     alignItems: 'center',
-    backgroundColor: '#DDD',
+    backgroundColor: '#d32f2f',
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
