@@ -26,13 +26,13 @@ class LocationList extends React.Component {
   render() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var dataSource = ds.cloneWithRows(this.props.dataSource);
-    var {onDelete} = this.props;
+    var { onClickRow } = this.props;
 
     return (
       <List>
         <SwipeListView
           dataSource={dataSource}
-          renderRow={(rowData) => <ListItem title={rowData} />}
+          renderRow={(rowData) => <ListItem onPress={ _ => {onClickRow(rowData)} } title={rowData.name} />}
           renderHiddenRow={ this.renderHiddenRow.bind(this) }
           leftOpenValue={75}
           rightOpenValue={-75}

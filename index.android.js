@@ -6,7 +6,8 @@ import {
   View,
   Alert,
   ListView,
-  LayoutAnimation
+  LayoutAnimation,
+  Linking
 } from 'react-native';
 import {Button} from 'react-native-elements';
 import LocationList from './components/LocationList';
@@ -21,7 +22,7 @@ export default class reactNativeProject extends Component {
     lastPosition: 'unknown',
     locationsArray: {
       locations: [
-        'empty location'
+        'initial Location'
       ]
     }
   };
@@ -31,7 +32,7 @@ export default class reactNativeProject extends Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        var initialPosition = JSON.stringify(position);
+        var initialPosition = position;
         this.setState({initialPosition});
       },
       (error) => alert(JSON.stringify(error)),
@@ -39,7 +40,9 @@ export default class reactNativeProject extends Component {
     );
 
     this.watchID = navigator.geolocation.watchPosition((position) => {
-      var lastPosition = JSON.stringify(position);
+      position.name = 'Location ' + this.state.locationsArray.locations.length;
+      console.log(this.state.locationsArray.locations.length);
+      var lastPosition = position;
       this.setState({lastPosition});
       this.setState({
         buttonDisable: false,
@@ -58,14 +61,30 @@ export default class reactNativeProject extends Component {
     this.setState({
       locations: locations
     });
+    console.log(this.state.locationsArray.locations.length);
   }
 
   _deleteRow = (rowID) => {
-    console.log(rowID);
-    LayoutAnimation.easeInEaseOut();
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     this.setState({
       locations: this.state.locationsArray.locations.splice(rowID, 1)
     });
+  }
+
+  _onClickRow = (rowData) => {
+    locationObject = rowData;
+    console.log(locationObject);
+    var url = 'http://maps.google.com/maps?q=loc:' + locationObject.coords.latitude + '+' + locationObject.coords.longitude;
+    // var url = 'http://www.google.com';
+    console.log(url);
+
+    Linking.canOpenURL(url).then(supported => {
+      if (!supported) {
+        console.log('Can\'t handle url: ' + url);
+      } else {
+        return Linking.openURL(url);
+      }
+    }).catch(err => console.error('An error occurred', err));
   }
 
   render() {
@@ -92,6 +111,7 @@ export default class reactNativeProject extends Component {
             style={styles.locationList}
             dataSource={this.state.locationsArray.locations}
             onDelete={ this._deleteRow }
+            onClickRow={ this._onClickRow }
           />
         </View>
       </View>
