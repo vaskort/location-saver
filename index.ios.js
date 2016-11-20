@@ -11,7 +11,8 @@ import {
   Text,
   View,
   Alert,
-  ListView
+  ListView,
+  LayoutAnimation
 } from 'react-native';
 import {Button} from 'react-native-elements';
 import LocationList from './components/LocationList';
@@ -65,8 +66,12 @@ export default class reactNativeProject extends Component {
     });
   }
 
-  deleteRow() {
-    console.log(this);
+  _deleteRow = (rowID) => {
+    console.log(rowID);
+    LayoutAnimation.easeInEaseOut();
+    this.setState({
+      locations: this.state.locationsArray.locations.splice(rowID, 1)
+    });
   }
 
   render() {
@@ -92,7 +97,7 @@ export default class reactNativeProject extends Component {
             key={this._data}
             style={styles.locationList}
             dataSource={this.state.locationsArray.locations}
-            onDelete={this.deleteRow}
+            onDelete={ this._deleteRow }
           />
         </View>
       </View>

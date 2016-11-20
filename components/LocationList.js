@@ -4,15 +4,16 @@ import { List, ListItem } from 'react-native-elements';
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 
 class LocationList extends React.Component {
+
   constructor() {
     super();
   }
 
-  renderHiddenRow(rowData, sectionID, rowID) {
+  renderHiddenRow(rowData, secID, rowID, rowMap) {
     return (
       <TouchableOpacity
         style={styles.rowBack}
-        onPress={ _ => console.log(rowID) }>
+        onPress={ _ => { this.props.onDelete(rowID); rowMap[`${secID}${rowID}`].closeRow()} }>
             <Text>Delete</Text>
             <Text
               style={styles.deleteButton}>
@@ -32,7 +33,7 @@ class LocationList extends React.Component {
         <SwipeListView
           dataSource={dataSource}
           renderRow={(rowData) => <ListItem title={rowData} />}
-          renderHiddenRow={ this.renderHiddenRow }
+          renderHiddenRow={ this.renderHiddenRow.bind(this) }
           leftOpenValue={75}
           rightOpenValue={-75}
           disableRightSwipe={true}
