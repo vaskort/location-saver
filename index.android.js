@@ -1,19 +1,14 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
   View,
-  Button,
   Alert,
-  ListView
+  ListView,
+  LayoutAnimation
 } from 'react-native';
+import {Button} from 'react-native-elements';
 import LocationList from './components/LocationList';
 
 
@@ -26,8 +21,7 @@ export default class reactNativeProject extends Component {
     lastPosition: 'unknown',
     locationsArray: {
       locations: [
-        'row 3',
-        'row 2'
+        'empty location'
       ]
     }
   };
@@ -59,40 +53,46 @@ export default class reactNativeProject extends Component {
   }
 
   _getLocation = () => {
-    // Alert.alert(
-    //   'Alert Title',
-    //   this.state.lastPosition,
-    //   [
-    //     {text: 'OK'},
-    //   ]
-    // )
-    console.log(this.state.locationsArray.locations);
     var locations = this.state.locationsArray.locations;
     locations.push(this.state.lastPosition);
     this.setState({
       locations: locations
     });
-    console.log(this.state.locationsArray.locations, this.state.lastPosition);
+  }
+
+  _deleteRow = (rowID) => {
+    console.log(rowID);
+    LayoutAnimation.easeInEaseOut();
+    this.setState({
+      locations: this.state.locationsArray.locations.splice(rowID, 1)
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Welcome to locationSaver!
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
+          Click the button to save your location to the list
         </Text>
         <View>
-          <Button title={this.state.buttonTitle} style={styles.button} onPress={this._getLocation} ref="button" disabled={this.state.buttonDisable} />
+          <Button raised icon={{name: 'room'}}
+            title={this.state.buttonTitle}
+            buttonStyle={styles.button}
+            onPress={this._getLocation}
+            disabled={this.state.buttonDisable}
+            accessibilityLabel="Add your location"
+          />
         </View>
-        <View>
-          <LocationList dataSource={this.state.locationsArray.locations} />
+        <View style={styles.locationListContainer}>
+          <LocationList
+            key={this._data}
+            style={styles.locationList}
+            dataSource={this.state.locationsArray.locations}
+            onDelete={ this._deleteRow }
+          />
         </View>
       </View>
     );
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    paddingTop: 20,
   },
   welcome: {
     fontSize: 20,
@@ -116,8 +117,17 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  locationListContainer: {
+    flex: 1,
+    alignSelf: 'stretch'
+  },
+  locationList: {
+    alignSelf: 'stretch'
+  },
   button: {
-    width: 100
+    backgroundColor: '#00998a',
+    borderRadius: 5,
+    marginTop: 20
   }
 });
 
