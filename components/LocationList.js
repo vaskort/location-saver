@@ -11,15 +11,24 @@ class LocationList extends React.Component {
 
   renderHiddenRow(rowData, secID, rowID, rowMap) {
     return (
-      <TouchableOpacity
-        style={styles.rowBack}
-        onPress={ _ => { this.props.onDelete(rowID); rowMap[`${secID}${rowID}`].closeRow()} }>
-            <Text>Delete</Text>
-            <Text
-              style={styles.deleteButton}>
-              Delete
-            </Text>
-      </TouchableOpacity>
+      <View style={styles.rowBack}>
+        <TouchableOpacity
+          style={styles.renameBg}
+          onPress={ _ => { this.props.onDelete(rowID); rowMap[`${secID}${rowID}`].closeRow()} }>
+              <Text
+                style={styles.renameButton}>
+                Rename
+              </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.deleteBg}
+          onPress={ _ => { this.props.onDelete(rowID); rowMap[`${secID}${rowID}`].closeRow()} }>
+              <Text
+                style={styles.deleteButton}>
+                Delete
+              </Text>
+        </TouchableOpacity>
+      </View>
     )
   }
 
@@ -39,9 +48,8 @@ class LocationList extends React.Component {
             </View>
           }
           renderHiddenRow={ this.renderHiddenRow.bind(this) }
-          leftOpenValue={75}
+          leftOpenValue={85}
           rightOpenValue={-75}
-          disableRightSwipe={true}
         />
       </List>
     );
@@ -52,13 +60,30 @@ const styles = StyleSheet.create({
   deleteButton: {
     color: 'white'
   },
+  renameButton: {
+    color: 'white'
+  },
+  renameBg: {
+    backgroundColor: 'blue',
+    flex: 1,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    paddingLeft: 15
+
+  },
+  deleteBg: {
+    backgroundColor: 'red',
+    flex: 1,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingRight: 15
+  },
   rowBack: {
     alignItems: 'center',
-    backgroundColor: '#d32f2f',
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingRight: 15,
+    justifyContent: 'space-between'
   },
 });
 
