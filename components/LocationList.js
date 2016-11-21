@@ -31,8 +31,13 @@ class LocationList extends React.Component {
     return (
       <List>
         <SwipeListView
+          enableEmptySections={true}
           dataSource={dataSource}
-          renderRow={(rowData) => <ListItem onPress={ _ => {onClickRow(rowData)} } title={rowData.name} />}
+          renderRow={(rowData) =>
+            <View>
+              <ListItem onPress={ _ => {onClickRow(rowData)} } title={rowData.name} />
+            </View>
+          }
           renderHiddenRow={ this.renderHiddenRow.bind(this) }
           leftOpenValue={75}
           rightOpenValue={-75}

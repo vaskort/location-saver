@@ -22,7 +22,6 @@ export default class reactNativeProject extends Component {
     lastPosition: 'unknown',
     locationsArray: {
       locations: [
-        'initial Location'
       ]
     }
   };
@@ -40,10 +39,12 @@ export default class reactNativeProject extends Component {
     );
 
     this.watchID = navigator.geolocation.watchPosition((position) => {
-      position.name = 'Location ' + this.state.locationsArray.locations.length;
-      console.log(this.state.locationsArray.locations.length);
+      // position.name = 'Location ' + this.state.locationsArray.locations.length + 1;
+      // console.log(position.name);
       var lastPosition = position;
-      this.setState({lastPosition});
+      this.setState({
+        lastPosition: position
+      });
       this.setState({
         buttonDisable: false,
         buttonTitle: 'Add my location'
@@ -56,12 +57,14 @@ export default class reactNativeProject extends Component {
   }
 
   _getLocation = () => {
+    var lastPositionWithName = this.state.lastPosition;
+    lastPositionWithName.name = 'Location ' + this.state.locationsArray.locations.length + 1;
     var locations = this.state.locationsArray.locations;
-    locations.push(this.state.lastPosition);
+    locations.push(lastPositionWithName);
     this.setState({
       locations: locations
     });
-    console.log(this.state.locationsArray.locations.length);
+    console.log(this.state.locationsArray.locations);
   }
 
   _deleteRow = (rowID) => {
