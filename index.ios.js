@@ -58,7 +58,7 @@ export default class reactNativeProject extends Component {
 
   _getLocation = () => {
     var lastPositionWithName = this.state.lastPosition;
-    lastPositionWithName.name = 'Location ' + this.state.locationsArray.locations.length + 1;
+    lastPositionWithName.name = 'New Location';
     var locations = this.state.locationsArray.locations;
     locations.push(lastPositionWithName);
     this.setState({
