@@ -14,7 +14,7 @@ class LocationList extends React.Component {
       <View style={styles.rowBack}>
         <TouchableOpacity
           style={styles.renameBg}
-          onPress={ _ => { this.props.onDelete(rowID); rowMap[`${secID}${rowID}`].closeRow()} }>
+          onPress={ _ => { this.props.onRename(rowData)} }>
               <Text
                 style={styles.renameButton}>
                 Rename

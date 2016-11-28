@@ -74,6 +74,10 @@ export default class reactNativeProject extends Component {
     });
   }
 
+  _renameRow = (rowData) => {
+    console.log(rowData);
+  }
+
   _onClickRow = (rowData) => {
     locationObject = rowData;
     console.log(locationObject);
@@ -114,6 +118,7 @@ export default class reactNativeProject extends Component {
             style={styles.locationList}
             dataSource={this.state.locationsArray.locations}
             onDelete={ this._deleteRow }
+            onRename={ this._renameRow }
             onClickRow={ this._onClickRow }
           />
         </View>
