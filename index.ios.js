@@ -42,6 +42,7 @@ export default class reactNativeProject extends Component {
       // position.name = 'Location ' + this.state.locationsArray.locations.length + 1;
       // console.log(position.name);
       var lastPosition = position;
+      console.log(position);
       this.setState({
         lastPosition: position
       });
@@ -74,8 +75,13 @@ export default class reactNativeProject extends Component {
     });
   }
 
+<<<<<<< HEAD
   _renameRow = (rowData) => {
     console.log(rowData);
+=======
+  _onRename = (rowID) => {
+    console.log(rowID);
+>>>>>>> 72159029d5904f605bfde006c96de4e508af31c6
   }
 
   _onClickRow = (rowData) => {
@@ -118,7 +124,11 @@ export default class reactNativeProject extends Component {
             style={styles.locationList}
             dataSource={this.state.locationsArray.locations}
             onDelete={ this._deleteRow }
+<<<<<<< HEAD
             onRename={ this._renameRow }
+=======
+            onRename={ this._onRename }
+>>>>>>> 72159029d5904f605bfde006c96de4e508af31c6
             onClickRow={ this._onClickRow }
           />
         </View>
