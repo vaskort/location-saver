@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Modal, TouchableHighlight} from 'react-native';
+import { View, Text, Modal, TouchableHighlight, StyleSheet} from 'react-native';
 
 class RenameModal extends React.Component {
 
@@ -7,13 +7,13 @@ class RenameModal extends React.Component {
     return (
       <View style={{marginTop: 22}}>
         <Modal
-          animationType={"slide"}
-          transparent={false}
+          animationType={"fade"}
+          transparent={true}
           visible={this.props.isVisible}
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
          <View style={{marginTop: 22}}>
-          <View>
+          <View style={styles.modal}>
             <Text>{this.props.locationName}</Text>
 
             <TouchableHighlight onPress={() => {
@@ -29,5 +29,11 @@ class RenameModal extends React.Component {
   }
 
 }
+
+const styles = StyleSheet.create({
+  modal: {
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  }
+});
 
 module.exports = RenameModal;
