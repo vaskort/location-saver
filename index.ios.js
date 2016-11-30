@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {Button} from 'react-native-elements';
 import LocationList from './components/LocationList';
+import RenameModal from './components/RenameModal';
 
 
 export default class reactNativeProject extends Component {
@@ -20,6 +21,8 @@ export default class reactNativeProject extends Component {
     buttonTitle: 'Loading you location....',
     initialPosition: 'unknown',
     lastPosition: 'unknown',
+    modalIsVisible: false,
+    modalLocationName: '',
     locationsArray: {
       locations: [
       ]
@@ -75,13 +78,11 @@ export default class reactNativeProject extends Component {
     });
   }
 
-<<<<<<< HEAD
   _renameRow = (rowData) => {
-    console.log(rowData);
-=======
-  _onRename = (rowID) => {
-    console.log(rowID);
->>>>>>> 72159029d5904f605bfde006c96de4e508af31c6
+    // first show the modal
+    this._setModalVisible(true);
+    console.log(rowData.name);
+    console.log(this._modalLocationName(rowData.name));
   }
 
   _onClickRow = (rowData) => {
@@ -98,6 +99,14 @@ export default class reactNativeProject extends Component {
         return Linking.openURL(url);
       }
     }).catch(err => console.error('An error occurred', err));
+  }
+
+  _setModalVisible = (visible) => {
+    this.setState({modalIsVisible: visible});
+  }
+
+  _modalLocationName = (name) => {
+    return name;
   }
 
   render() {
@@ -124,13 +133,16 @@ export default class reactNativeProject extends Component {
             style={styles.locationList}
             dataSource={this.state.locationsArray.locations}
             onDelete={ this._deleteRow }
-<<<<<<< HEAD
             onRename={ this._renameRow }
-=======
-            onRename={ this._onRename }
->>>>>>> 72159029d5904f605bfde006c96de4e508af31c6
             onClickRow={ this._onClickRow }
           />
+        </View>
+        <View>
+          <RenameModal
+            isVisible={ this.state.modalIsVisible }
+            setModalVisible={ this._setModalVisible }
+            locationName={ this._modalLocationName }
+            />
         </View>
       </View>
     );

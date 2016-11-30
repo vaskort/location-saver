@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Modal} from 'react-native';
+import { View, Text, Modal, TouchableHighlight} from 'react-native';
 
 class RenameModal extends React.Component {
-
-  state = {
-    modalVisible: false,
-  }
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
 
   render() {
     return (
@@ -17,15 +9,15 @@ class RenameModal extends React.Component {
         <Modal
           animationType={"slide"}
           transparent={false}
-          visible={this.state.modalVisible}
+          visible={this.props.isVisible}
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
          <View style={{marginTop: 22}}>
           <View>
-            <Text>Hello World!</Text>
+            <Text>{this.props.locationName}</Text>
 
             <TouchableHighlight onPress={() => {
-              this.setModalVisible(!this.state.modalVisible)
+              this.props.setModalVisible(false)
             }}>
               <Text>Hide Modal</Text>
             </TouchableHighlight>
