@@ -21,17 +21,9 @@ class RenameModal extends React.Component {
             }}>
               <Text>Hide Modal</Text>
             </TouchableHighlight>
-
           </View>
          </View>
         </Modal>
-
-        <TouchableHighlight onPress={() => {
-          this.setModalVisible(true)
-        }}>
-          <Text>Show Modal</Text>
-        </TouchableHighlight>
-
       </View>
     );
   }

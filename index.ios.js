@@ -106,7 +106,9 @@ export default class reactNativeProject extends Component {
   }
 
   _modalLocationName = (name) => {
-    return name;
+    this.setState({
+      modalLocationName: name
+    })
   }
 
   render() {
@@ -141,7 +143,7 @@ export default class reactNativeProject extends Component {
           <RenameModal
             isVisible={ this.state.modalIsVisible }
             setModalVisible={ this._setModalVisible }
-            locationName={ this._modalLocationName }
+            locationName={ this.state.modalLocationName }
             />
         </View>
       </View>
