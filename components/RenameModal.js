@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Modal, TouchableHighlight, StyleSheet} from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, SearchBar } from 'react-native-elements';
 
 class RenameModal extends React.Component {
 
@@ -15,7 +15,15 @@ class RenameModal extends React.Component {
          <View style={styles.modalWrapper}>
           <View style={styles.emptySpace}></View>
           <View style={styles.modal}>
-            <Text style={styles.locationName}>{this.props.locationName}</Text>
+            <View style={styles.locationNameWrapper}>
+              <SearchBar
+                lightTheme={true}
+                noIcon={true}
+                maxLength={100}
+                editable={true}
+                defaultValue={this.props.locationName}
+              />
+            </View>
             <View style={styles.buttonWrapper}>
               <Button
                 raised
@@ -56,7 +64,8 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     height: 100,
     padding: 5,
-    flex: 1
+    flex: 1,
+    justifyContent: 'center',
   },
   emptySpace: {
     flex: 1
@@ -73,8 +82,9 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     backgroundColor: 'grey'
   },
-  locationName: {
-    flex:1,
+  locationNameWrapper: {
+    flex:2,
+    // alignItems: 'center',
     justifyContent: 'center',
   },
   buttonWrapper: {
