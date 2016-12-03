@@ -29,7 +29,7 @@ class RenameModal extends React.Component {
                 raised
                 title="Save"
                 onPress={() => {
-                  this.props.setModalVisible(false)
+                  this.props.renameLocation(this.props.locationName)
                 }}
                 buttonStyle={styles.buttons}
               />
