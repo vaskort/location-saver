@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Modal, TouchableHighlight, StyleSheet} from 'react-native';
+import { View, Text, TouchableHighlight, StyleSheet} from 'react-native';
+import Modal from 'react-native-modalbox';
 
 class RenameModal extends React.Component {
 
@@ -9,7 +10,7 @@ class RenameModal extends React.Component {
         <Modal
           animationType={"fade"}
           transparent={true}
-          visible={this.props.isVisible}
+          isOpen={this.props.isVisible}
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
          <View style={{marginTop: 22}}>
@@ -32,7 +33,10 @@ class RenameModal extends React.Component {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: 'rgba(0,0,0,0.5)'
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    // flex: 1,
+    // flexDirection: 'row',
+    alignSelf: 'stretch'
   }
 });
 

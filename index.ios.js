@@ -21,7 +21,9 @@ export default class reactNativeProject extends Component {
     buttonTitle: 'Loading you location....',
     initialPosition: 'unknown',
     lastPosition: 'unknown',
-    modalIsVisible: false,
+    //rename modal
+    modalIsVisible: true,
+    // the location that rename modal shows
     modalLocationName: '',
     locationsArray: {
       locations: [
