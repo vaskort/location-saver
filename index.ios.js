@@ -24,7 +24,7 @@ export default class reactNativeProject extends Component {
     //rename modal
     modalIsVisible: true,
     // the location that rename modal shows
-    modalLocationName: '',
+    modalLocationName: 'Dummy Location',
     locationsArray: {
       locations: [
       ]

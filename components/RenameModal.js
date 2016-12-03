@@ -13,6 +13,7 @@ class RenameModal extends React.Component {
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
          <View style={styles.modalWrapper}>
+          <View style={styles.emptySpace}></View>
           <View style={styles.modal}>
             <Text style={styles.locationName}>{this.props.locationName}</Text>
             <View style={styles.buttonWrapper}>
@@ -30,10 +31,11 @@ class RenameModal extends React.Component {
                 onPress={() => {
                   this.props.setModalVisible(false)
                 }}
-                buttonStyle={styles.buttons}
+                buttonStyle={styles.cancelButton}
               />
             </View>
           </View>
+          <View style={styles.emptySpace}></View>
          </View>
         </Modal>
     );
@@ -53,12 +55,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignSelf: 'stretch',
     height: 100,
-    padding: 5
+    padding: 5,
+    flex: 1
+  },
+  emptySpace: {
+    flex: 1
   },
   buttons: {
     borderRadius: 5,
     paddingLeft: 20,
-    paddingRight: 20
+    paddingRight: 20,
+    backgroundColor: '#00998a'
+  },
+  cancelButton: {
+    borderRadius: 5,
+    paddingLeft: 20,
+    paddingRight: 20,
+    backgroundColor: 'grey'
   },
   locationName: {
     flex:1,
@@ -67,7 +80,7 @@ const styles = StyleSheet.create({
   buttonWrapper: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
   }
 });
