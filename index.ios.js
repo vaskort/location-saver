@@ -12,6 +12,7 @@ import {
 import {Button} from 'react-native-elements';
 import LocationList from './components/LocationList';
 import RenameModal from './components/RenameModal';
+import update from 'immutability-helper';
 
 
 export default class reactNativeProject extends Component {
@@ -22,7 +23,7 @@ export default class reactNativeProject extends Component {
     initialPosition: 'unknown',
     lastPosition: 'unknown',
     //rename modal
-    modalIsVisible: true,
+    modalIsVisible: false,
     //is used to find the item on the array of locations and change its name on save
     locationIndexInModal: '0',
     // the location that rename modal shows
@@ -85,7 +86,7 @@ export default class reactNativeProject extends Component {
   _renameRow = (rowData, rowID) => {
     // first show the modal
     this._setModalVisible(true, rowID);
-    // change the name inside the modal 
+    // change the name inside the modal
     this.setState({
       modalLocationName: rowData.name
     })
@@ -121,6 +122,7 @@ export default class reactNativeProject extends Component {
   _modalLocationName = (name) => {
     // sets the location that will be inside the textinput
     // inside the modal
+    console.log(name);
     this.setState({
       modalLocationName: name
     })
@@ -128,8 +130,16 @@ export default class reactNativeProject extends Component {
   // this function is triggered when you click save inside the rename modal
   _renameLocation = (name) => {
     //hide the modal since you clicked save
-    console.log(name, this.state.locationIndexInModal);
+    var indexed = this.state.locationIndexInModal;
     this._setModalVisible(false);
+    // add the old array in a var
+    var oldLocationArray = this.state.locationsArray.locations;
+    oldLocationArray[indexed].name = name
+    console.log(name);
+    this.setState({
+      oldLocationArray
+    });
+    // console.log(this.state.locationsArray.locations);
   }
 
   render() {
@@ -166,6 +176,7 @@ export default class reactNativeProject extends Component {
             setModalVisible={ this._setModalVisible }
             renameLocation={ this._renameLocation }
             locationName={ this.state.modalLocationName }
+            onChangeCallback={ this._modalLocationName }
             />
         </View>
       </View>

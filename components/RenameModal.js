@@ -22,6 +22,7 @@ class RenameModal extends React.Component {
                 maxLength={100}
                 editable={true}
                 defaultValue={this.props.locationName}
+                onChangeText={this.props.onChangeCallback}
               />
             </View>
             <View style={styles.buttonWrapper}>
