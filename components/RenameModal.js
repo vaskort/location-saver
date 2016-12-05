@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)'
+    backgroundColor: 'rgba(0,0,0,0.3)'
   },
   modal: {
     backgroundColor: 'white',
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   buttonWrapper: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     justifyContent: 'center',
   }
 });
