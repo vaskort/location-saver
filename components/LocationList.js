@@ -43,7 +43,7 @@ class LocationList extends React.Component {
           enableEmptySections={true}
           dataSource={dataSource}
           renderRow={(rowData) =>
-            <View>
+            <View style={styles.listItem}>
               <ListItem onPress={ _ => {onClickRow(rowData)} } title={rowData.name} />
             </View>
           }
@@ -85,6 +85,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  listItem: {
+    backgroundColor: 'white',
+    borderColor: 'black'
+  }
 });
 
 module.exports = LocationList;
