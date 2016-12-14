@@ -27,6 +27,8 @@ export default class reactNativeProject extends Component {
     modalIsVisible: false,
     //is used to find the item on the array of locations and change its name on save
     locationIndexInModal: '0',
+    //Map modal visibility
+    isMapModalVisible: false,
     // the location that rename modal shows
     modalLocationName: 'Dummy Location',
     locationsArray: {
@@ -143,6 +145,18 @@ export default class reactNativeProject extends Component {
     // console.log(this.state.locationsArray.locations);
   }
 
+  _showMapModal = () => {
+    this.setState({
+      'isMapModalVisible': true
+    })
+  }
+
+  _closeMapModal = () => {
+    this.setState({
+      'isMapModalVisible': false
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -164,6 +178,7 @@ export default class reactNativeProject extends Component {
           <Button
             title='Open Modal'
             buttonStyle={styles.button}
+            onPress={this._showMapModal}
           />
         </View>
         <View style={styles.locationListContainer}>
@@ -185,7 +200,10 @@ export default class reactNativeProject extends Component {
             onChangeCallback={ this._modalLocationName }
             />
         </View>
-        <MapModal />
+        <MapModal
+          isMapModalVisible={this.state.isMapModalVisible}
+          closeMapModal={this._closeMapModal}
+        />
       </View>
     );
   }

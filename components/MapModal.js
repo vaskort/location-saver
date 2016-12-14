@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Modal, StyleSheet} from 'react-native';
 import MapView from 'react-native-maps';
+import {Button} from 'react-native-elements';
 
 class MapModal extends React.Component {
   render() {
@@ -8,7 +9,7 @@ class MapModal extends React.Component {
       <Modal
         animationType={"fade"}
         transparent={true}
-        visible={false}
+        visible={this.props.isMapModalVisible}
         >
         <View style={styles.container}>
          <MapView
@@ -21,6 +22,11 @@ class MapModal extends React.Component {
              style={styles.map}
            >
          </MapView>
+         <Button
+           title='Close'
+           buttonStyle={styles.button}
+           onPress={this.props.closeMapModal}
+         />
        </View>
      </Modal>
     );
@@ -43,6 +49,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  button: {
+    backgroundColor: '#00998a',
+    borderRadius: 5,
+    marginTop: 20
   }
 })
 
