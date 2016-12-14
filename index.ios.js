@@ -152,12 +152,17 @@ export default class reactNativeProject extends Component {
           Click the button to save your location to the list
         </Text>
         <View>
-          <Button raised icon={{name: 'room'}}
+          <Button
+            raised icon={{name: 'room'}}
             title={this.state.buttonTitle}
             buttonStyle={styles.button}
             onPress={this._getLocation}
             disabled={this.state.buttonDisable}
             accessibilityLabel="Add your location"
+          />
+          <Button
+            title='Open Modal'
+            buttonStyle={styles.button}
           />
         </View>
         <View style={styles.locationListContainer}>
