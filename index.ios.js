@@ -12,6 +12,7 @@ import {
 import {Button} from 'react-native-elements';
 import LocationList from './components/LocationList';
 import RenameModal from './components/RenameModal';
+import MapModal from './components/MapModal';
 import update from 'immutability-helper';
 
 
@@ -184,6 +185,7 @@ export default class reactNativeProject extends Component {
             onChangeCallback={ this._modalLocationName }
             />
         </View>
+        <MapModal />
       </View>
     );
   }
