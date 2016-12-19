@@ -4,6 +4,20 @@ import MapView from 'react-native-maps';
 import {Button} from 'react-native-elements';
 
 class MapModal extends React.Component {
+
+  state = {
+    region: {
+      latitude: this.props.initialLatitude,
+      longitude: this.props.initialLongitude,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121,
+    }
+  }
+
+  onRegionChange(region) {
+    this.setState({ region });
+  }
+
   render() {
     return (
       <Modal
@@ -13,20 +27,34 @@ class MapModal extends React.Component {
         >
         <View style={styles.container}>
          <MapView
-             region={{
-               latitude: 37.78825,
-               longitude: -122.4324,
-               latitudeDelta: 0.015,
-               longitudeDelta: 0.0121,
-             }}
+             region={this.state.region}
              style={styles.map}
            >
+           <MapView.Marker
+             draggable
+             coordinate={this.state.region}
+             title='yo'
+             description='teh test'
+             onDragEnd={
+               (e) => {
+                 this.setState({ x: e.nativeEvent.coordinate });
+                 console.log(this.state.x);
+               }
+             }
+           />
          </MapView>
-         <Button
-           title='Close'
-           buttonStyle={styles.button}
-           onPress={this.props.closeMapModal}
-         />
+         <View>
+           <Button
+             title='Close'
+             buttonStyle={styles.button}
+             onPress={this.props.closeMapModal}
+           />
+           <Button
+             title='Add location'
+             buttonStyle={styles.button}
+             onPress={this.props.closeMapModal}
+           />
+         </View>
        </View>
      </Modal>
     );

@@ -21,7 +21,12 @@ export default class reactNativeProject extends Component {
   state = {
     buttonDisable: true,
     buttonTitle: 'Loading you location....',
-    initialPosition: 'unknown',
+    initialPosition: {
+      coords: {
+        latitude: 0,
+        longitude: 0
+      }
+    },
     lastPosition: 'unknown',
     //rename modal
     modalIsVisible: false,
@@ -44,6 +49,7 @@ export default class reactNativeProject extends Component {
       (position) => {
         var initialPosition = position;
         this.setState({initialPosition});
+        console.log(position);
       },
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 100000, maximumAge: 1000}
@@ -68,6 +74,7 @@ export default class reactNativeProject extends Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
+  // gets the location and saves it to the location array
   _getLocation = () => {
     var lastPositionWithName = this.state.lastPosition;
     lastPositionWithName.name = 'Location ' + parseInt(this.state.locationsArray.locations.length + 1);
@@ -203,6 +210,8 @@ export default class reactNativeProject extends Component {
         <MapModal
           isMapModalVisible={this.state.isMapModalVisible}
           closeMapModal={this._closeMapModal}
+          initialLatitude={this.state.initialPosition.coords.latitude}
+          initialLongitude={this.state.initialPosition.coords.longitude}
         />
       </View>
     );
