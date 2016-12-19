@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Modal, StyleSheet} from 'react-native';
 import MapView from 'react-native-maps';
-import {Button} from 'react-native-elements';
+import {Button, Icon} from 'react-native-elements';
 
 class MapModal extends React.Component {
 
@@ -38,12 +38,24 @@ class MapModal extends React.Component {
              onDragEnd={
                (e) => {
                  this.setState({ x: e.nativeEvent.coordinate });
-                 console.log(this.state.x);
                }
              }
            />
          </MapView>
-         <View>
+         {/* find my location button */}
+         <Icon
+           iconStyle={styles.findUsersLocation}
+           containerStyle={styles.findUsersLocation}
+           raised
+           large
+           name='target-two'
+           type='foundation'
+           color='#000000'
+           size={40}
+           underlayColor='transparent'
+           onPress={this.props.onFindLocation}
+         />
+         <View className="buttonWrapper" style={styles.buttonWrapper}>
            <Button
              title='Close'
              buttonStyle={styles.button}
@@ -78,10 +90,25 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
+  buttonWrapper: {
+    // flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    paddingBottom: 10
+  },
   button: {
     backgroundColor: '#00998a',
     borderRadius: 5,
-    marginTop: 20
+    marginTop: 20,
+  },
+  findUsersLocation: {
+    flex: 1,
+    position: 'absolute',
+    top: 20,
+    left: 10,
+    backgroundColor: 'transparent',
+    shadowColor: 0
   }
 })
 

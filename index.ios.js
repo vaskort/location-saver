@@ -18,15 +18,30 @@ import update from 'immutability-helper';
 
 export default class reactNativeProject extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      lastPosition: {
+        coords: {
+          latitude: 37.972025,
+          longitude: 23.725979
+        }
+      },
+      locationsArray: {
+        locations: [
+        ]
+      },
+      //rename modal
+      modalIsVisible: false,
+      //Map modal visibility
+      isMapModalVisible: false,
+    };
+  }
+
   state = {
     buttonDisable: true,
     buttonTitle: 'Loading you location....',
-    initialPosition: {
-      coords: {
-        latitude: 0,
-        longitude: 0
-      }
-    },
+    initialPosition: 'uknown',
     lastPosition: 'unknown',
     //rename modal
     modalIsVisible: false,
@@ -45,6 +60,14 @@ export default class reactNativeProject extends Component {
   watchID: ?number = null;
 
   componentDidMount() {
+    this._findUserPosition();
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
+  _findUserPosition = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         var initialPosition = position;
@@ -68,10 +91,6 @@ export default class reactNativeProject extends Component {
         buttonTitle: 'Add my location'
       });
     });
-  }
-
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
   }
 
   // gets the location and saves it to the location array
@@ -210,8 +229,9 @@ export default class reactNativeProject extends Component {
         <MapModal
           isMapModalVisible={this.state.isMapModalVisible}
           closeMapModal={this._closeMapModal}
-          initialLatitude={this.state.initialPosition.coords.latitude}
-          initialLongitude={this.state.initialPosition.coords.longitude}
+          initialLatitude={this.state.lastPosition.coords.latitude}
+          initialLongitude={this.state.lastPosition.coords.longitude}
+          onFindLocation={this._findUserPosition}
         />
       </View>
     );
