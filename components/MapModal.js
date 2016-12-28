@@ -18,6 +18,10 @@ class MapModal extends React.Component {
     this.setState({ region });
   }
 
+  onDragEnd() {
+    console.log('yo');
+  }
+
   render() {
     return (
       <Modal
@@ -37,7 +41,15 @@ class MapModal extends React.Component {
              description='teh test'
              onDragEnd={
                (e) => {
-                 this.setState({ x: e.nativeEvent.coordinate });
+                 console.log(this);
+                 this.setState({
+                   region: {
+                     ...this.state.region,
+                     latitude: e.nativeEvent.coordinate.latitude,
+                     longitude: e.nativeEvent.coordinate.longitude
+                   }
+                 });
+                 console.log(this.state);
                }
              }
            />
@@ -55,6 +67,12 @@ class MapModal extends React.Component {
            underlayColor='transparent'
            onPress={this.props.onFindLocation}
          />
+         <View style={styles.bubble}>
+           <Text className="locationCoords">
+             {this.state.region.latitude.toPrecision(7)},
+             {this.state.region.longitude.toPrecision(7)}
+           </Text>
+         </View>
          <View className="buttonWrapper" style={styles.buttonWrapper}>
            <Button
              title='Close'
@@ -109,6 +127,12 @@ const styles = StyleSheet.create({
     left: 10,
     backgroundColor: 'transparent',
     shadowColor: 0
+  },
+  bubble: {
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    paddingHorizontal: 18,
+    paddingVertical: 12,
+    borderRadius: 20,
   }
 })
 
