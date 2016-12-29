@@ -95,9 +95,8 @@ export default class reactNativeProject extends Component {
 
   // gets the location from geolocation and saves it to the location array
   _getLocation = () => {
-    var lastPositionWithName = {};
+    var lastPositionWithName = { ...this.state.lastPosition };
     console.log(this.state.lastPosition);
-    lastPositionWithName = this.state.lastPosition;
     lastPositionWithName["name"] = 'Location ' + parseInt(this.state.locationsArray.locations.length + 1);
     var locations = this.state.locationsArray.locations;
     locations.push(lastPositionWithName);
@@ -135,15 +134,12 @@ export default class reactNativeProject extends Component {
     this.setState({
       modalLocationName: rowData.name
     })
-    console.log(rowData, rowID);
   }
 
   _onClickRow = (rowData) => {
     locationObject = rowData;
-    console.log(locationObject);
     var url = 'http://maps.google.com/maps?q=loc:' + locationObject.coords.latitude + '+' + locationObject.coords.longitude;
     // var url = 'http://www.google.com';
-    console.log(url);
 
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
@@ -167,7 +163,6 @@ export default class reactNativeProject extends Component {
   _modalLocationName = (name) => {
     // sets the location that will be inside the textinput
     // inside the modal
-    console.log(name);
     this.setState({
       modalLocationName: name
     })
@@ -180,11 +175,9 @@ export default class reactNativeProject extends Component {
     // add the old array in a var
     var oldLocationArray = this.state.locationsArray.locations;
     oldLocationArray[indexed].name = name
-    console.log(name);
     this.setState({
       oldLocationArray
     });
-    // console.log(this.state.locationsArray.locations);
   }
 
   _showMapModal = () => {
