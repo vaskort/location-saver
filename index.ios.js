@@ -93,16 +93,22 @@ export default class reactNativeProject extends Component {
     });
   }
 
-  // gets the location and saves it to the location array
+  // gets the location from geolocation and saves it to the location array
   _getLocation = () => {
     var lastPositionWithName = this.state.lastPosition;
+    console.log(lastPositionWithName);
     lastPositionWithName.name = 'Location ' + parseInt(this.state.locationsArray.locations.length + 1);
     var locations = this.state.locationsArray.locations;
     locations.push(lastPositionWithName);
     this.setState({
       locations: locations
     });
-    console.log(this.state.locationsArray.locations);
+  }
+
+  //gets the location from marker and saves it to the location array
+  _getMarkerLocation = (location) => {
+    //location parameter is the region object in the state of mapmodal
+    console.log(location.latitude);
   }
 
   _deleteRow = (rowID) => {
@@ -227,11 +233,12 @@ export default class reactNativeProject extends Component {
             />
         </View>
         <MapModal
-          isMapModalVisible={this.state.isMapModalVisible}
-          closeMapModal={this._closeMapModal}
-          initialLatitude={this.state.lastPosition.coords.latitude}
-          initialLongitude={this.state.lastPosition.coords.longitude}
-          onFindLocation={this._findUserPosition}
+          isMapModalVisible={ this.state.isMapModalVisible }
+          closeMapModal={ this._closeMapModal }
+          initialLatitude={ this.state.lastPosition.coords.latitude }
+          initialLongitude={ this.state.lastPosition.coords.longitude }
+          onFindLocation={ this._findUserPosition }
+          onAddLocation={ this._getMarkerLocation }
         />
       </View>
     );

@@ -18,11 +18,9 @@ class MapModal extends React.Component {
     this.setState({ region });
   }
 
-  onDragEnd() {
-    console.log('yo');
-  }
-
   render() {
+    var markerLocation = this.state.region;
+
     return (
       <Modal
         animationType={"fade"}
@@ -41,7 +39,6 @@ class MapModal extends React.Component {
              description='teh test'
              onDragEnd={
                (e) => {
-                 console.log(this);
                  this.setState({
                    region: {
                      ...this.state.region,
@@ -49,7 +46,6 @@ class MapModal extends React.Component {
                      longitude: e.nativeEvent.coordinate.longitude
                    }
                  });
-                 console.log(this.state);
                }
              }
            />
@@ -77,12 +73,12 @@ class MapModal extends React.Component {
            <Button
              title='Close'
              buttonStyle={styles.button}
-             onPress={this.props.closeMapModal}
+             onPress={ this.props.closeMapModal }
            />
            <Button
              title='Add location'
              buttonStyle={styles.button}
-             onPress={this.props.closeMapModal}
+             onPress={ this.props.onAddLocation.bind(this, markerLocation) }
            />
          </View>
        </View>
