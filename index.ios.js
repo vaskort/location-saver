@@ -95,8 +95,9 @@ export default class reactNativeProject extends Component {
 
   // gets the location from geolocation and saves it to the location array
   _getLocation = () => {
-    var lastPositionWithName = this.state.lastPosition;
-    console.log(lastPositionWithName);
+    var lastPositionWithName = {};
+    console.log(this.state.lastPosition);
+    lastPositionWithName = this.state.lastPosition;
     lastPositionWithName["name"] = 'Location ' + parseInt(this.state.locationsArray.locations.length + 1);
     var locations = this.state.locationsArray.locations;
     locations.push(lastPositionWithName);
@@ -110,9 +111,7 @@ export default class reactNativeProject extends Component {
     //location parameter is the region object in the state of mapmodal
     var newMarkerLocation = {};
     newMarkerLocation["name"] = 'Marker Location ' + parseInt(this.state.locationsArray.locations.length + 1);
-    newMarkerLocation["coords"] = {};
-    newMarkerLocation["coords"]["latitude"] = location.latitude;
-    newMarkerLocation["coords"]["longitude"] = location.longitude;
+    newMarkerLocation["coords"] = { ...location }
     var locations = this.state.locationsArray.locations;
     locations.push(newMarkerLocation);
     this.setState({
