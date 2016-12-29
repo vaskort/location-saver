@@ -97,7 +97,7 @@ export default class reactNativeProject extends Component {
   _getLocation = () => {
     var lastPositionWithName = this.state.lastPosition;
     console.log(lastPositionWithName);
-    lastPositionWithName.name = 'Location ' + parseInt(this.state.locationsArray.locations.length + 1);
+    lastPositionWithName["name"] = 'Location ' + parseInt(this.state.locationsArray.locations.length + 1);
     var locations = this.state.locationsArray.locations;
     locations.push(lastPositionWithName);
     this.setState({
@@ -108,7 +108,18 @@ export default class reactNativeProject extends Component {
   //gets the location from marker and saves it to the location array
   _getMarkerLocation = (location) => {
     //location parameter is the region object in the state of mapmodal
-    console.log(location.latitude);
+    var newMarkerLocation = {};
+    newMarkerLocation["name"] = 'Marker Location ' + parseInt(this.state.locationsArray.locations.length + 1);
+    newMarkerLocation["coords"] = {};
+    newMarkerLocation["coords"]["latitude"] = location.latitude;
+    newMarkerLocation["coords"]["longitude"] = location.longitude;
+    var locations = this.state.locationsArray.locations;
+    locations.push(newMarkerLocation);
+    this.setState({
+      locations: locations
+    });
+    // and finally close the modal
+    this._closeMapModal();
   }
 
   _deleteRow = (rowID) => {
