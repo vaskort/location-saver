@@ -82,7 +82,9 @@ export default class reactNativeProject extends Component {
       // position.name = 'Location ' + this.state.locationsArray.locations.length + 1;
       // console.log(position.name);
       var lastPosition = position;
-      console.log(position);
+      // TODO: check why allowing this console is run many times - might be from
+      // the geolocation trying to find the exact location of the user
+      // console.log(position);
       this.setState({
         lastPosition: position
       });

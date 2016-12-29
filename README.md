@@ -16,6 +16,5 @@ _If you have gmaps or citymapper installed you will be asked with which one you 
 ![Navigate to the location](./screenshots/locationSaver2.gif)
 
 ### You can add your location with the help of a map and a marker ###
-_Not yet fully developed_
 
 ![React native maps](./screenshots/locationSaver3.gif)
