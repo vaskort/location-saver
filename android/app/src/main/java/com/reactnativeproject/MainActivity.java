@@ -1,6 +1,7 @@
 package com.reactnativeproject;
 
 import com.facebook.react.ReactActivity;
+import com.airbnb.android.react.maps.MapsPackage; //<- this line is important
 
 public class MainActivity extends ReactActivity {
 

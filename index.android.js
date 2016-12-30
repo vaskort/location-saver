@@ -11,15 +11,46 @@ import {
 } from 'react-native';
 import {Button} from 'react-native-elements';
 import LocationList from './components/LocationList';
+import RenameModal from './components/RenameModal';
+import MapModal from './components/MapModal';
+import update from 'immutability-helper';
 
 
 export default class reactNativeProject extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      lastPosition: {
+        coords: {
+          latitude: 37.972025,
+          longitude: 23.725979
+        }
+      },
+      locationsArray: {
+        locations: [
+        ]
+      },
+      //rename modal
+      modalIsVisible: false,
+      //Map modal visibility
+      isMapModalVisible: false,
+    };
+  }
+
   state = {
     buttonDisable: true,
     buttonTitle: 'Loading you location....',
-    initialPosition: 'unknown',
+    initialPosition: 'uknown',
     lastPosition: 'unknown',
+    //rename modal
+    modalIsVisible: false,
+    //is used to find the item on the array of locations and change its name on save
+    locationIndexInModal: '0',
+    //Map modal visibility
+    isMapModalVisible: false,
+    // the location that rename modal shows
+    modalLocationName: 'Dummy Location',
     locationsArray: {
       locations: [
       ]
@@ -29,10 +60,19 @@ export default class reactNativeProject extends Component {
   watchID: ?number = null;
 
   componentDidMount() {
+    this._findUserPosition();
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
+  _findUserPosition = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         var initialPosition = position;
         this.setState({initialPosition});
+        console.log(position);
       },
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 100000, maximumAge: 1000}
@@ -42,6 +82,9 @@ export default class reactNativeProject extends Component {
       // position.name = 'Location ' + this.state.locationsArray.locations.length + 1;
       // console.log(position.name);
       var lastPosition = position;
+      // TODO: check why allowing this console is run many times - might be from
+      // the geolocation trying to find the exact location of the user
+      // console.log(position);
       this.setState({
         lastPosition: position
       });
@@ -52,19 +95,31 @@ export default class reactNativeProject extends Component {
     });
   }
 
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
-  }
-
+  // gets the location from geolocation and saves it to the location array
   _getLocation = () => {
-    var lastPositionWithName = this.state.lastPosition;
-    lastPositionWithName.name = 'New Location';
+    var lastPositionWithName = { ...this.state.lastPosition };
+    console.log(this.state.lastPosition);
+    lastPositionWithName["name"] = 'Location ' + parseInt(this.state.locationsArray.locations.length + 1);
     var locations = this.state.locationsArray.locations;
     locations.push(lastPositionWithName);
     this.setState({
       locations: locations
     });
-    console.log(this.state.locationsArray.locations);
+  }
+
+  //gets the location from marker and saves it to the location array
+  _getMarkerLocation = (location) => {
+    //location parameter is the region object in the state of mapmodal
+    var newMarkerLocation = {};
+    newMarkerLocation["name"] = 'Marker Location ' + parseInt(this.state.locationsArray.locations.length + 1);
+    newMarkerLocation["coords"] = { ...location }
+    var locations = this.state.locationsArray.locations;
+    locations.push(newMarkerLocation);
+    this.setState({
+      locations: locations
+    });
+    // and finally close the modal
+    this._closeMapModal();
   }
 
   _deleteRow = (rowID) => {
@@ -74,12 +129,19 @@ export default class reactNativeProject extends Component {
     });
   }
 
+  _renameRow = (rowData, rowID) => {
+    // first show the modal
+    this._setModalVisible(true, rowID);
+    // change the name inside the modal
+    this.setState({
+      modalLocationName: rowData.name
+    })
+  }
+
   _onClickRow = (rowData) => {
     locationObject = rowData;
-    console.log(locationObject);
     var url = 'http://maps.google.com/maps?q=loc:' + locationObject.coords.latitude + '+' + locationObject.coords.longitude;
     // var url = 'http://www.google.com';
-    console.log(url);
 
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
@@ -88,6 +150,48 @@ export default class reactNativeProject extends Component {
         return Linking.openURL(url);
       }
     }).catch(err => console.error('An error occurred', err));
+  }
+
+  _setModalVisible = (visible, rowID) => {
+    // as we open the rename modal we need to set visibility of modal to true
+    // but also the index of that location inside the textinput so we know
+    // which location we will edit later when user clicks save
+    this.setState({
+      modalIsVisible: visible,
+      locationIndexInModal: rowID
+    });
+  }
+
+  _modalLocationName = (name) => {
+    // sets the location that will be inside the textinput
+    // inside the modal
+    this.setState({
+      modalLocationName: name
+    })
+  }
+  // this function is triggered when you click save inside the rename modal
+  _renameLocation = (name) => {
+    //hide the modal since you clicked save
+    var indexed = this.state.locationIndexInModal;
+    this._setModalVisible(false);
+    // add the old array in a var
+    var oldLocationArray = this.state.locationsArray.locations;
+    oldLocationArray[indexed].name = name
+    this.setState({
+      oldLocationArray
+    });
+  }
+
+  _showMapModal = () => {
+    this.setState({
+      'isMapModalVisible': true
+    })
+  }
+
+  _closeMapModal = () => {
+    this.setState({
+      'isMapModalVisible': false
+    })
   }
 
   render() {
@@ -100,12 +204,18 @@ export default class reactNativeProject extends Component {
           Click the button to save your location to the list
         </Text>
         <View>
-          <Button raised icon={{name: 'room'}}
+          <Button
+            raised icon={{name: 'room'}}
             title={this.state.buttonTitle}
             buttonStyle={styles.button}
             onPress={this._getLocation}
             disabled={this.state.buttonDisable}
             accessibilityLabel="Add your location"
+          />
+          <Button
+            title='Open Modal'
+            buttonStyle={styles.button}
+            onPress={this._showMapModal}
           />
         </View>
         <View style={styles.locationListContainer}>
@@ -114,9 +224,27 @@ export default class reactNativeProject extends Component {
             style={styles.locationList}
             dataSource={this.state.locationsArray.locations}
             onDelete={ this._deleteRow }
+            onRename={ this._renameRow }
             onClickRow={ this._onClickRow }
           />
         </View>
+        <View>
+          <RenameModal
+            isVisible={ this.state.modalIsVisible }
+            setModalVisible={ this._setModalVisible }
+            renameLocation={ this._renameLocation }
+            locationName={ this.state.modalLocationName }
+            onChangeCallback={ this._modalLocationName }
+            />
+        </View>
+        <MapModal
+          isMapModalVisible={ this.state.isMapModalVisible }
+          closeMapModal={ this._closeMapModal }
+          initialLatitude={ this.state.lastPosition.coords.latitude }
+          initialLongitude={ this.state.lastPosition.coords.longitude }
+          onFindLocation={ this._findUserPosition }
+          onAddLocation={ this._getMarkerLocation }
+        />
       </View>
     );
   }
