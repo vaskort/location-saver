@@ -21,6 +21,8 @@ export default class reactNativeProject extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      buttonDisable: true,
+      buttonTitle: 'Loading you location....',
       lastPosition: {
         coords: {
           latitude: 37.972025,

@@ -26,6 +26,7 @@ class MapModal extends React.Component {
         animationType={"fade"}
         transparent={true}
         visible={this.props.isMapModalVisible}
+        onRequestClose={() => {}}
         >
         <View style={styles.container}>
          <MapView
@@ -89,20 +90,12 @@ class MapModal extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
   map: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    ...StyleSheet.absoluteFillObject,
   },
   buttonWrapper: {
     // flex: 1,
