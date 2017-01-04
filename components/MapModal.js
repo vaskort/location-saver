@@ -54,7 +54,7 @@ class MapModal extends React.Component {
          {/* find my location button */}
          <Icon
            iconStyle={styles.findUsersLocation}
-           containerStyle={styles.findUsersLocation}
+           containerStyle={[styles.findUserLocationContainer, styles.findUsersLocation]}
            raised
            large
            name='target-two'
@@ -109,13 +109,16 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 20,
   },
+  findUserLocationContainer: {
+    color: 'transparent'
+  },
   findUsersLocation: {
     flex: 1,
     position: 'absolute',
     top: 20,
     left: 10,
     backgroundColor: 'transparent',
-    shadowColor: 0
+    shadowColor: 0,
   },
   bubble: {
     backgroundColor: 'rgba(255,255,255,0.7)',
