@@ -3,7 +3,7 @@ An app that helps you save your location, in React Native
 
 _Still under development_
 
-If you want to see what I'm doing (at your own risk :P) clone this repo run `npm install` and then `react-native run-ios`. (Android recently updated also so you can try `react native android` but generally I'm working on iOS first)
+If you want to see what I'm doing (at your own risk :P) clone this repo run `npm install` and then `react-native run-ios`. (Android recently updated also so you can try `react-native run-android` but generally I'm working on iOS first)
 
 ### You can add your own location to the list ###
 (_Also rename and delete it_)
