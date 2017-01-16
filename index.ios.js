@@ -40,7 +40,7 @@ export default class reactNativeProject extends Component {
 
   state = {
     buttonDisable: true,
-    buttonTitle: 'Loading you location....',
+    buttonTitle: 'Loading your location....',
     initialPosition: 'uknown',
     lastPosition: 'unknown',
     //rename modal
