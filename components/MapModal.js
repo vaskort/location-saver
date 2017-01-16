@@ -11,6 +11,10 @@ class MapModal extends React.Component {
       longitude: this.props.initialLongitude,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
+    },
+    markerPosition: {
+      latitude: 'undefined',
+      longitude: 'undefined'
     }
   }
 
@@ -19,7 +23,7 @@ class MapModal extends React.Component {
   }
 
   render() {
-    var markerLocation = this.state.region;
+    var markerLocation = this.state.markerPosition.latitude !== 'undefined' ? this.state.markerPosition : this.state.region ;
 
     return (
       <Modal
@@ -41,8 +45,7 @@ class MapModal extends React.Component {
              onDragEnd={
                (e) => {
                  this.setState({
-                   region: {
-                     ...this.state.region,
+                   markerPosition: {
                      latitude: e.nativeEvent.coordinate.latitude,
                      longitude: e.nativeEvent.coordinate.longitude
                    }
@@ -51,7 +54,7 @@ class MapModal extends React.Component {
              }
            />
          </MapView>
-         {/* find my location button */}
+         {/* find my location button inside the map modal */}
          <Icon
            iconStyle={styles.findUsersLocation}
            containerStyle={[styles.findUserLocationContainer, styles.findUsersLocation]}
@@ -66,8 +69,8 @@ class MapModal extends React.Component {
          />
          <View style={styles.bubble}>
            <Text className="locationCoords">
-             {this.state.region.latitude.toPrecision(7)},
-             {this.state.region.longitude.toPrecision(7)}
+             {this.state.markerPosition.latitude !== 'undefined' ? this.state.markerPosition.latitude.toPrecision(7) : this.state.region.latitude},
+             {this.state.markerPosition.longitude !== 'undefined' ? this.state.markerPosition.longitude.toPrecision(7) : this.state.region.longitude}
            </Text>
          </View>
          <View className="buttonWrapper" style={styles.buttonWrapper}>
@@ -110,7 +113,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   findUserLocationContainer: {
-    color: 'transparent'
+    // color: 'transparent'
   },
   findUsersLocation: {
     flex: 1,
