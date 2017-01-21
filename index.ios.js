@@ -7,13 +7,16 @@ import {
   Alert,
   ListView,
   LayoutAnimation,
-  Linking
+  Linking,
+  AsyncStorage
 } from 'react-native';
 import {Button} from 'react-native-elements';
 import LocationList from './components/LocationList';
 import RenameModal from './components/RenameModal';
 import MapModal from './components/MapModal';
 import update from 'immutability-helper';
+
+var STORAGE_KEY = '@MySuperStore:key';
 
 
 export default class reactNativeProject extends Component {
@@ -35,6 +38,7 @@ export default class reactNativeProject extends Component {
       modalIsVisible: false,
       //Map modal visibility
       isMapModalVisible: false,
+      messages: []
     };
   }
 
@@ -60,7 +64,29 @@ export default class reactNativeProject extends Component {
   watchID: ?number = null;
 
   componentDidMount() {
+    this._loadInitialState().done();
     this._findUserPosition();
+  }
+
+  _loadInitialState = async () => {
+    //try to find locations from localstorage
+    try {
+      var value = await AsyncStorage.getItem(STORAGE_KEY);
+      if (value !== null){
+        //setting the state will trigger the render inside the list
+        this.setState({
+          locationsArray: {
+            locations: JSON.parse(value)
+          }
+        });
+        this._appendMessage('Recovered selection from disk: ' + value);
+      }
+      else {
+        this._appendMessage('Initialized with no selection on disk.');
+      }
+    } catch (error) {
+      this._appendMessage('AsyncStorage error: ' + error.message);
+    }
   }
 
   componentWillUnmount() {
@@ -105,6 +131,21 @@ export default class reactNativeProject extends Component {
     this.setState({
       locations: locations
     });
+    //save the new locations to local storage as well
+    this._locationsTouched();
+  }
+
+  _locationsTouched = () => {
+    this._saveLocationStorage(JSON.stringify(this.state.locationsArray.locations));
+  }
+
+  _saveLocationStorage = async(locations) => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, locations)
+      this._appendMessage('Saved selection to disk: ' + locations);
+    } catch (error) {
+      this._appendMessage('AsyncStorage error: ' + error.message);
+    }
   }
 
   //gets the location from marker and saves it to the location array
@@ -118,15 +159,18 @@ export default class reactNativeProject extends Component {
     this.setState({
       locations: locations
     });
+    this._locationsTouched();
     // and finally close the modal
     this._closeMapModal();
   }
 
-  _deleteRow = (rowID) => {
+  _deleteRow = async(rowID) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     this.setState({
       locations: this.state.locationsArray.locations.splice(rowID, 1)
     });
+    //save the new locations to local storage as well since we deleted a row
+    this._locationsTouched();
   }
 
   _renameRow = (rowData, rowID) => {
@@ -180,6 +224,8 @@ export default class reactNativeProject extends Component {
     this.setState({
       oldLocationArray
     });
+    //save the new locations to local storage as well
+    this._locationsTouched();
   }
 
   _showMapModal = () => {
@@ -193,6 +239,11 @@ export default class reactNativeProject extends Component {
       'isMapModalVisible': false
     })
   }
+
+  _appendMessage = (message) => {
+    console.log(message);
+    this.setState({messages: this.state.messages.concat(message)});
+  };
 
   render() {
     return (
