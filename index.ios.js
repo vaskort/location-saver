@@ -53,6 +53,8 @@ export default class reactNativeProject extends Component {
     locationIndexInModal: '0',
     //Map modal visibility
     isMapModalVisible: false,
+    // this will get true when user clicks find location inside modal
+    modalMarkerLocation: 0,
     // the location that rename modal shows
     modalLocationName: 'Dummy Location',
     locationsArray: {
@@ -93,12 +95,18 @@ export default class reactNativeProject extends Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
-  _findUserPosition = () => {
+  _findUserPosition = (e) => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         var initialPosition = position;
         this.setState({initialPosition});
-        console.log(position);
+        // if e exists then the call is from inside the map modal
+        if (typeof e !== "undefined") {
+          this.setState({
+            modalMarkerLocation: initialPosition
+          })
+          console.log('triggered');
+        }
       },
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 100000, maximumAge: 1000}
@@ -246,6 +254,8 @@ export default class reactNativeProject extends Component {
   };
 
   render() {
+    let self = this;
+
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
@@ -293,8 +303,15 @@ export default class reactNativeProject extends Component {
           closeMapModal={ this._closeMapModal }
           initialLatitude={ this.state.lastPosition.coords.latitude }
           initialLongitude={ this.state.lastPosition.coords.longitude }
-          onFindLocation={ this._findUserPosition }
+          onFindLocation={
+            (e) => {
+              console.log(self);
+              self._findUserPosition('callFromChild');
+            }
+          }
           onAddLocation={ this._getMarkerLocation }
+          onFindLocationTriggered={ this.state.modalMarkerLocation }
+          userLocation={ this.state.initialPosition }
         />
       </View>
     );

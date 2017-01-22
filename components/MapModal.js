@@ -23,7 +23,8 @@ class MapModal extends React.Component {
   }
 
   render() {
-    var markerLocation = this.state.markerPosition.latitude !== 'undefined' ? this.state.markerPosition : this.state.region ;
+    let markerLocation = this.state.markerPosition.latitude !== 'undefined' ? this.state.markerPosition : this.state.region ;
+    let self = this;
 
     return (
       <Modal
@@ -65,7 +66,11 @@ class MapModal extends React.Component {
            color='#000000'
            size={40}
            underlayColor='transparent'
-           onPress={this.props.onFindLocation}
+           onPress = {
+              (e) => {
+                  self.props.onFindLocation();
+              }
+          }
          />
          <View style={styles.bubble}>
            <Text className="locationCoords">
