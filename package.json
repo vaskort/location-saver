@@ -9,6 +9,7 @@
   "dependencies": {
     "babel": "^6.5.2",
     "babel-plugin-module-alias": "^1.6.0",
+    "bluebird": "^3.4.7",
     "immutability-helper": "^2.0.0",
     "react": "15.4.1",
     "react-native": "0.39.2",

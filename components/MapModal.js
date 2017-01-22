@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Modal, StyleSheet} from 'react-native';
 import MapView from 'react-native-maps';
 import {Button, Icon} from 'react-native-elements';
+import Promise from 'bluebird';
 
 class MapModal extends React.Component {
 
@@ -20,6 +21,19 @@ class MapModal extends React.Component {
 
   onRegionChange(region) {
     this.setState({ region });
+  }
+
+  // this function moves marker and region to the user location
+  _moveMarkerRegion = (location) => {
+    console.log('inside move marker region func');
+    console.log(location, this.state.region);
+    this.setState({
+      region: {
+        ...this.state.region,
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      }
+    })
   }
 
   render() {
@@ -68,7 +82,9 @@ class MapModal extends React.Component {
            underlayColor='transparent'
            onPress = {
               (e) => {
-                  self.props.onFindLocation();
+                // TODO: make the following as a promise
+                self.props.onFindLocation();
+                this._moveMarkerRegion(self.props.userLocation);
               }
           }
          />

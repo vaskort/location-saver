@@ -305,13 +305,12 @@ export default class reactNativeProject extends Component {
           initialLongitude={ this.state.lastPosition.coords.longitude }
           onFindLocation={
             (e) => {
-              console.log(self);
               self._findUserPosition('callFromChild');
             }
           }
           onAddLocation={ this._getMarkerLocation }
           onFindLocationTriggered={ this.state.modalMarkerLocation }
-          userLocation={ this.state.initialPosition }
+          userLocation={ this.state.lastPosition }
         />
       </View>
     );
