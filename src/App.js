@@ -8,9 +8,10 @@ import {
   ListView,
   LayoutAnimation,
   Linking,
-  AsyncStorage
+  AsyncStorage,
+  TouchableHighlight
 } from 'react-native';
-import {Button} from 'react-native-elements';
+import {Button, Icon} from 'react-native-elements';
 import LocationList from '../components/LocationList';
 import RenameModal from '../components/RenameModal';
 import MapModal from '../components/MapModal';
@@ -38,7 +39,8 @@ class App extends React.Component {
       modalIsVisible: false,
       //Map modal visibility
       isMapModalVisible: false,
-      messages: []
+      locationServices: true,
+      messages: [],
     };
   }
 
@@ -107,8 +109,15 @@ class App extends React.Component {
           })
           console.log('triggered');
         }
+        this.setState({
+          locationServices: true
+        });
       },
-      (error) => alert(JSON.stringify(error)),
+      (error) => {
+        this.setState({
+          locationServices: false
+        });
+      },
       {enableHighAccuracy: true, timeout: 100000, maximumAge: 1000}
     );
 
@@ -255,6 +264,11 @@ class App extends React.Component {
 
   render() {
     let self = this;
+    var locationServicesStyle = {
+      opacity: this.state.locationServices ? 0 : 1
+    }
+
+    console.log(locationServicesStyle);
 
     return (
       <View style={styles.container}>
@@ -312,7 +326,22 @@ class App extends React.Component {
           onFindLocationTriggered={ this.state.modalMarkerLocation }
           userLocation={ this.state.lastPosition }
         />
-      </View>
+      <TouchableHighlight style={[locationServicesStyle, styles.locationNotificationBox]}>
+        <View style={styles.locationNotificationBoxInner}>
+          <Icon
+            name="alert"
+            type="foundation"
+            color='#f50'
+            size={30}
+            iconStyle={styles.locationBoxIcon}
+          />
+          <Text style={styles.locationNotificationBoxText}>
+            Your location is disabled.{"\n"}
+            Tap to enable
+          </Text>
+        </View>
+      </TouchableHighlight>
+    </View>
     );
   }
 }
@@ -346,6 +375,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#00998a',
     borderRadius: 5,
     marginTop: 20
+  },
+  locationNotificationBox: {
+    backgroundColor: '#f6a623',
+    alignSelf: 'stretch',
+    paddingTop: 10,
+    paddingBottom: 10,
+    position: 'absolute',
+    bottom: 0,
+    left:0,
+    right: 0
+  },
+  locationNotificationBoxText: {
+    color: '#ffffff',
+    fontWeight: 'bold',
+    paddingLeft: 20
+  },
+  locationBoxIcon: {
+    color: '#ffffff'
+  },
+  locationNotificationBoxInner: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
+    paddingLeft: 20
   }
 });
 
