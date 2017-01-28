@@ -109,9 +109,6 @@ class App extends React.Component {
           })
           console.log('triggered');
         }
-        this.setState({
-          locationServices: true
-        });
       },
       (error) => {
         this.setState({
@@ -133,7 +130,8 @@ class App extends React.Component {
       });
       this.setState({
         buttonDisable: false,
-        buttonTitle: 'Add my location'
+        buttonTitle: 'Add my location',
+        locationServices: true
       });
     });
   }

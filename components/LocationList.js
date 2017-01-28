@@ -90,8 +90,6 @@ const styles = StyleSheet.create({
   listItemParent: {
     backgroundColor: 'white',
     paddingLeft: -15,
-    alignSelf: 'stretch',
-    flex: 1
   }
 });
 
