@@ -42,6 +42,9 @@ class LocationList extends React.Component {
         <SwipeListView
           enableEmptySections={true}
           dataSource={dataSource}
+          previewFirstRow={true}
+          previewOpenValue={-75}
+          tension={50}
           renderRow={(rowData) =>
             <View style={styles.listItemParent}>
               <ListItem onPress={ _ => {onClickRow(rowData)} } title={rowData.name} />
@@ -85,7 +88,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   listItemParent: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    paddingLeft: -15,
+    alignSelf: 'stretch',
+    flex: 1
   }
 });
 
