@@ -30,7 +30,6 @@ class RenameModal extends React.Component {
 
   render() {
     var emptySpaceStyles = () => {
-      console.log(this.state.keyboardActive);
       if (this.state.keyboardActive === true) {
         return {
           flex:0

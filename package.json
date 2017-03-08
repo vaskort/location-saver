@@ -13,6 +13,7 @@
     "immutability-helper": "^2.0.0",
     "react": "15.4.1",
     "react-native": "0.39.2",
+    "react-native-android-location-services-dialog-box": "^1.2.0",
     "react-native-elements": "^0.8.2",
     "react-native-maps": "^0.12.1",
     "react-native-swipe-list-view": "^0.3.1",

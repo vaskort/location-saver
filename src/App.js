@@ -16,6 +16,8 @@ import LocationList from '../components/LocationList';
 import RenameModal from '../components/RenameModal';
 import MapModal from '../components/MapModal';
 import update from 'immutability-helper';
+import LocationServicesDialogBox from "react-native-android-location-services-dialog-box";
+
 
 var STORAGE_KEY = '@MySuperStore:key';
 
@@ -139,7 +141,6 @@ class App extends React.Component {
   // gets the location from geolocation and saves it to the location array
   _getLocation = () => {
     var lastPositionWithName = { ...this.state.lastPosition };
-    console.log(this.state.lastPosition);
     lastPositionWithName["name"] = 'Location ' + parseInt(this.state.locationsArray.locations.length + 1);
     var locations = this.state.locationsArray.locations;
     locations.push(lastPositionWithName);
@@ -258,7 +259,11 @@ class App extends React.Component {
   _appendMessage = (message) => {
     console.log(message);
     this.setState({messages: this.state.messages.concat(message)});
-  };
+  }
+
+  _openLocationSettings = () => {
+    alert('yo');
+  }
 
   render() {
     let self = this;
@@ -322,7 +327,10 @@ class App extends React.Component {
           onFindLocationTriggered={ this.state.modalMarkerLocation }
           userLocation={ this.state.lastPosition }
         />
-      <TouchableHighlight style={[locationServicesStyle, styles.locationNotificationBox]}>
+      <TouchableHighlight
+        onPress={ this._openLocationSettings }
+        style={[locationServicesStyle, styles.locationNotificationBox]}
+      >
         <View style={styles.locationNotificationBoxInner}>
           <Icon
             name="alert"
@@ -333,7 +341,7 @@ class App extends React.Component {
           />
           <Text style={styles.locationNotificationBoxText}>
             Your location is disabled.{"\n"}
-            Tap to enable
+            Tap to enable.
           </Text>
         </View>
       </TouchableHighlight>
