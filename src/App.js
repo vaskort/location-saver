@@ -25,6 +25,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      buttonTitle: 'Loading your location....',
       lastPosition: {
         coords: {
           latitude: 37.972025,
@@ -46,7 +47,6 @@ class App extends React.Component {
 
   state = {
     buttonDisable: true,
-    buttonTitle: 'Loading your location....',
     initialPosition: 'uknown',
     lastPosition: 'unknown',
     //rename modal
