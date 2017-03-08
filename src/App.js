@@ -266,8 +266,6 @@ class App extends React.Component {
       opacity: this.state.locationServices ? 0 : 1
     }
 
-    console.log(locationServicesStyle);
-
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
