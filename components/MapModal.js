@@ -69,25 +69,6 @@ class MapModal extends React.Component {
              }
            />
          </MapView>
-         {/* find my location button inside the map modal */}
-         <Icon
-           iconStyle={styles.findUsersLocation}
-           containerStyle={[styles.findUserLocationContainer, styles.findUsersLocation]}
-           raised
-           large
-           name='target-two'
-           type='foundation'
-           color='#000000'
-           size={40}
-           underlayColor='transparent'
-           onPress = {
-              (e) => {
-                // TODO: make the following as a promise
-                self.props.onFindLocation();
-                this._moveMarkerRegion(self.props.userLocation);
-              }
-          }
-         />
          <View style={styles.bubble}>
            <Text className="locationCoords">
              {this.state.markerPosition.latitude !== 'undefined' ? this.state.markerPosition.latitude.toPrecision(7) : this.state.region.latitude},
@@ -106,6 +87,23 @@ class MapModal extends React.Component {
              onPress={ this.props.onAddLocation.bind(this, markerLocation) }
            />
          </View>
+         {/* find my location button inside the map modal */}
+         <Icon
+           containerStyle={[styles.findUserLocationContainer, styles.findUsersLocation]}
+           large
+           name='target-two'
+           type='foundation'
+           color='#000000'
+           size={40}
+           underlayColor='transparent'
+           onPress = {
+              (e) => {
+                // TODO: make the following as a promise
+                self.props.onFindLocation();
+                this._moveMarkerRegion(self.props.userLocation);
+              }
+          }
+         />
        </View>
      </Modal>
     );
@@ -134,15 +132,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   findUserLocationContainer: {
-    // color: 'transparent'
-  },
-  findUsersLocation: {
-    flex: 1,
     position: 'absolute',
-    top: 20,
-    left: 10,
-    backgroundColor: 'transparent',
-    shadowColor: 0,
+    top:30,
+    left:20,
+    flex: 1
   },
   bubble: {
     backgroundColor: 'rgba(255,255,255,0.7)',
