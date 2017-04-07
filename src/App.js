@@ -289,16 +289,16 @@ class App extends React.Component {
   render() {
     let self = this;
     var locationServicesStyle = {
-      opacity: this.state.locationServices ? 0 : 1
+      bottom: this.state.locationServices ? -100 : 0
     }
 
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to locationSaver!
+          Welcome to Location Saver!
         </Text>
         <Text style={styles.instructions}>
-          Click the button to save your location to the list
+          Add your location instantly or from the Map Modal
         </Text>
         <View>
           <Button
@@ -310,11 +310,13 @@ class App extends React.Component {
             accessibilityLabel="Add your location"
           />
           <Button
-            title='Open Modal'
+            title='Open Map Modal'
             buttonStyle={styles.button}
             onPress={this._showMapModal}
+            disabled={this.state.buttonDisable}
           />
         </View>
+        <Text style={ styles.heading }>Your saved locations</Text>
         <View style={styles.locationListContainer}>
           <LocationList
             key={this._data}
@@ -350,7 +352,8 @@ class App extends React.Component {
         />
       <TouchableHighlight
         onPress={ this._openLocationSettings }
-        style={[locationServicesStyle, styles.locationNotificationBox]}
+        style={[styles.locationNotificationBox, locationServicesStyle]}
+        underlayColor={ '#f8b03a' }
       >
         <View style={styles.locationNotificationBoxInner}>
           <Icon
@@ -388,6 +391,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   locationListContainer: {
     flex: 1,
@@ -424,6 +429,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
     paddingLeft: 20
+  },
+  heading: {
+    'paddingTop': 40,
+    'textAlign': 'center',
+    'fontSize': 20,
   }
 });
 
