@@ -1,4 +1,4 @@
-package com.reactnativeproject;
+package com.locationsaver;
 
 import com.facebook.react.ReactActivity;
 import com.airbnb.android.react.maps.MapsPackage; //<- this line is important
@@ -11,6 +11,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "reactNativeProject";
+        return "LocationSaver";
     }
 }

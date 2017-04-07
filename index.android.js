@@ -7,7 +7,7 @@ import {
 import update from 'immutability-helper';
 import App from './src/App';
 
-export default class reactNativeProject extends Component {
+export default class LocationSaver extends Component {
 
   render() {
     return (
@@ -17,4 +17,4 @@ export default class reactNativeProject extends Component {
 
 }
 
-AppRegistry.registerComponent('reactNativeProject', () => reactNativeProject);
+AppRegistry.registerComponent('LocationSaver', () => LocationSaver);

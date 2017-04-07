@@ -1,4 +1,4 @@
-package com.reactnativeproject;
+package com.locationsaver;
 
 import android.app.Application;
 import android.util.Log;
