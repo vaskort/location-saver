@@ -106,11 +106,9 @@ class App extends React.Component {
         var initialPosition = position;
         this.setState({
           initialPosition,
-          buttonDisable: false,
-          locationServices: true,
-          lastPosition: position,
-          buttonTitle: 'Add my location'
+          lastPosition: position
         });
+        this._enableTheButton();
         // if e exists then the call is from inside the map modal
         if (typeof e !== "undefined") {
           this.setState({
@@ -136,11 +134,16 @@ class App extends React.Component {
       this.setState({
         lastPosition: position
       });
-      this.setState({
-        buttonDisable: false,
-        buttonTitle: 'Add my location',
-        locationServices: true
-      });
+      this._enableTheButton();
+    });
+  }
+
+  //enable the button and hide the yellow box
+  _enableTheButton = () => {
+    this.setState({
+      buttonDisable: false,
+      buttonTitle: 'Add my location',
+      locationServices: true
     });
   }
 
@@ -268,7 +271,19 @@ class App extends React.Component {
   }
 
   _openLocationSettings = () => {
-    alert('yo');
+    let self = this;
+    LocationServicesDialogBox.checkLocationServicesIsEnabled({
+        message: "<h2>Use Location ?</h2>This app wants to change your device settings:<br/><br/>Use GPS, Wi-Fi, and cell network for location<br/><br/><a href='#'>Learn more</a>",
+        ok: "YES",
+        cancel: "NO"
+    }).then(function(success) {
+        self._findUserPosition();
+        self.setState({
+          locationServices: true
+        });
+    }).catch((error) => {
+        console.log(error.message); // error.message => "disabled"
+    });
   }
 
   render() {
