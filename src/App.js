@@ -102,27 +102,33 @@ class App extends React.Component {
   _findUserPosition = (e) => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        console.log('inside position 1', position);
         var initialPosition = position;
-        this.setState({initialPosition});
+        this.setState({
+          initialPosition,
+          buttonDisable: false,
+          locationServices: true,
+          lastPosition: position,
+          buttonTitle: 'Add my location'
+        });
         // if e exists then the call is from inside the map modal
         if (typeof e !== "undefined") {
           this.setState({
             modalMarkerLocation: initialPosition
           })
-          console.log('triggered');
         }
       },
       (error) => {
+        console.log('inside error', error);
         this.setState({
           locationServices: false
         });
       },
-      {enableHighAccuracy: true, timeout: 100000, maximumAge: 1000}
+      {timeout: 100000, maximumAge: 1000}
     );
 
     this.watchID = navigator.geolocation.watchPosition((position) => {
-      // position.name = 'Location ' + this.state.locationsArray.locations.length + 1;
-      // console.log(position.name);
+      console.log('inside positions 2 - watch');
       var lastPosition = position;
       // TODO: check why allowing this console is run many times - might be from
       // the geolocation trying to find the exact location of the user

@@ -51,6 +51,7 @@ class MapModal extends React.Component {
          <MapView
              region={this.state.region}
              style={styles.map}
+             showsUserLocation={true}
            >
            <MapView.Marker
              draggable
