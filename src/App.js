@@ -317,6 +317,7 @@ class App extends React.Component {
           />
         </View>
         <Text style={ styles.heading }>Your saved locations</Text>
+        <Text style={ styles.smallNote }>(Tap a location to get directions to it)</Text>
         <View style={styles.locationListContainer}>
           <LocationList
             key={this._data}
@@ -434,6 +435,10 @@ const styles = StyleSheet.create({
     'paddingTop': 40,
     'textAlign': 'center',
     'fontSize': 20,
+  },
+  smallNote: {
+    'fontSize': 10,
+    'fontStyle': 'italic'
   }
 });
 

@@ -52,12 +52,14 @@ class MapModal extends React.Component {
              region={this.state.region}
              style={styles.map}
              showsUserLocation={true}
+             showsMyLocationButton={false}
+             toolbarEnabled={false}
            >
            <MapView.Marker
              draggable
              coordinate={this.state.region}
-             title='yo'
-             description='teh test'
+             title='Marker'
+             description='Keep pressing to move'
              onDragEnd={
                (e) => {
                  this.setState({
@@ -83,7 +85,7 @@ class MapModal extends React.Component {
              onPress={ this.props.closeMapModal }
            />
            <Button
-             title='Add location'
+             title='Add marker location'
              buttonStyle={styles.button}
              onPress={ this.props.onAddLocation.bind(this, markerLocation) }
            />
