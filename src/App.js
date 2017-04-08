@@ -102,11 +102,16 @@ class App extends React.Component {
   _findUserPosition = (e) => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log('inside position 1', position);
         var initialPosition = position;
+        console.log(position);
         this.setState({
-          initialPosition,
-          lastPosition: position
+          initialPosition: initialPosition,
+          lastPosition: {
+            coords: {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+            }
+          }
         });
         this._enableTheButton();
         // if e exists then the call is from inside the map modal
@@ -115,6 +120,7 @@ class App extends React.Component {
             modalMarkerLocation: initialPosition
           })
         }
+        // console.log('akropoli?', this.state.lastPosition.coords.latitude);
       },
       (error) => {
         console.log('inside error', error);
@@ -126,7 +132,6 @@ class App extends React.Component {
     );
 
     this.watchID = navigator.geolocation.watchPosition((position) => {
-      console.log('inside positions 2 - watch');
       var lastPosition = position;
       // TODO: check why allowing this console is run many times - might be from
       // the geolocation trying to find the exact location of the user

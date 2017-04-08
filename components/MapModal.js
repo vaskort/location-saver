@@ -8,14 +8,26 @@ class MapModal extends React.Component {
 
   state = {
     region: {
-      latitude: this.props.initialLatitude,
-      longitude: this.props.initialLongitude,
+      latitude: this.props.userLocation.latitude || this.props.initialLatitude,
+      longitude: this.props.userLocation.longitude || this.props.initialLongitude,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
     markerPosition: {
       latitude: 'undefined',
       longitude: 'undefined'
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.initialLatitude !== this.state.latitude || nextProps.initialLongitude !== this.state.longitude) {
+      this.setState({
+        region: {
+          ...this.state.region,
+          latitude: nextProps.initialLatitude,
+          longitude: nextProps.initialLongitude,
+        }
+      })
     }
   }
 
