@@ -8,8 +8,8 @@ class MapModal extends React.Component {
 
   state = {
     region: {
-      latitude: this.props.userLocation.latitude || this.props.initialLatitude,
-      longitude: this.props.userLocation.longitude || this.props.initialLongitude,
+      latitude: this.props.initialLatitude,
+      longitude: this.props.initialLongitude,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
@@ -29,10 +29,7 @@ class MapModal extends React.Component {
         }
       })
     }
-  }
-
-  onRegionChange(region) {
-    this.setState({ region });
+    console.log(nextProps);
   }
 
   // this function moves marker and region to the user location
@@ -48,6 +45,10 @@ class MapModal extends React.Component {
     })
   }
 
+  _resetMarkerPosition = () => {
+
+  }
+
   render() {
     let markerLocation = this.state.markerPosition.latitude !== 'undefined' ? this.state.markerPosition : this.state.region ;
     let self = this;
@@ -61,25 +62,38 @@ class MapModal extends React.Component {
         >
         <View style={styles.container}>
          <MapView
+             ref = {(mapView) => { _mapView = mapView; }}
              region={this.state.region}
              style={styles.map}
              showsUserLocation={true}
              showsMyLocationButton={false}
              toolbarEnabled={false}
+             moveOnMarkerPress={true}
+             followsUserLocation={false}
+             onRegionChange={this.onRegionChange}
            >
            <MapView.Marker
              draggable
-             coordinate={this.state.region}
+             coordinate={markerLocation}
              title='Marker'
              description='Keep pressing to move'
              onDragEnd={
                (e) => {
+                 console.log('ela ous', this.state.region.latitude);
+                 this.setState({
+                   region: _mapView.__lastRegion,
+                 });
                  this.setState({
                    markerPosition: {
                      latitude: e.nativeEvent.coordinate.latitude,
                      longitude: e.nativeEvent.coordinate.longitude
                    }
                  });
+                 console.log('ela ous2', this.state.region.latitude);
+                //  _mapView.animateToCoordinate({
+                //    latitude: e.nativeEvent.coordinate.latitude,
+                //    longitude: e.nativeEvent.coordinate.longitude
+                //  }, 500)
                }
              }
            />
@@ -116,6 +130,7 @@ class MapModal extends React.Component {
                 // TODO: make the following as a promise
                 self.props.onFindLocation();
                 this._moveMarkerRegion(self.props.userLocation);
+                console.log('button pressed');
               }
           }
          />

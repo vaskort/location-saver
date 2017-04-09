@@ -103,15 +103,9 @@ class App extends React.Component {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         var initialPosition = position;
-        console.log(position);
         this.setState({
-          initialPosition: initialPosition,
-          lastPosition: {
-            coords: {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            }
-          }
+          initialPosition,
+          lastPosition: position
         });
         this._enableTheButton();
         // if e exists then the call is from inside the map modal
@@ -120,7 +114,6 @@ class App extends React.Component {
             modalMarkerLocation: initialPosition
           })
         }
-        // console.log('akropoli?', this.state.lastPosition.coords.latitude);
       },
       (error) => {
         console.log('inside error', error);
