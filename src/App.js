@@ -207,7 +207,7 @@ class App extends React.Component {
 
   _onClickRow = (rowData) => {
     locationObject = rowData;
-    var url = 'http://maps.google.com/?q=' + locationObject.coords.latitude + '' + locationObject.coords.longitude;
+    var url = 'http://maps.google.com/?q=' + locationObject.coords.latitude + ',' + locationObject.coords.longitude;
     // var url = 'https://citymapper.com/directions?endcoord=51.537060%2C-0.079179'
     // var url = 'http://www.google.com';
 
