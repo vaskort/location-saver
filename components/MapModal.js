@@ -46,7 +46,12 @@ class MapModal extends React.Component {
   }
 
   _resetMarkerPosition = () => {
-
+    this.setState({
+      markerPosition: {
+        latitude: this.props.initialLatitude,
+        longitude: this.props.initialLongitude
+      }
+    })
   }
 
   render() {
@@ -70,7 +75,6 @@ class MapModal extends React.Component {
              toolbarEnabled={false}
              moveOnMarkerPress={true}
              followsUserLocation={false}
-             onRegionChange={this.onRegionChange}
            >
            <MapView.Marker
              draggable
@@ -108,12 +112,26 @@ class MapModal extends React.Component {
            <Button
              title='Close'
              buttonStyle={styles.button}
-             onPress={ this.props.closeMapModal }
+             onPress={
+               (e) => {
+                 // close the modal
+                 self.props.closeMapModal();
+                 // reset the marker
+                 self._resetMarkerPosition();
+               }
+             }
            />
            <Button
              title='Add marker location'
              buttonStyle={styles.button}
-             onPress={ this.props.onAddLocation.bind(this, markerLocation) }
+             onPress={
+               (e) => {
+                  // add location
+                  self.props.onAddLocation(markerLocation);
+                  // reset the marker
+                  self._resetMarkerPosition();
+                 }
+               }
            />
          </View>
          {/* find my location button inside the map modal */}
