@@ -207,7 +207,7 @@ class App extends React.Component {
 
   _onClickRow = (rowData) => {
     locationObject = rowData;
-    var url = 'http://maps.google.com/?q=' + locationObject.coords.latitude + ',' + locationObject.coords.longitude;
+    var url = 'http://maps.google.com/?q=' + locationObject.coords.latitude + '' + locationObject.coords.longitude;
     // var url = 'https://citymapper.com/directions?endcoord=51.537060%2C-0.079179'
     // var url = 'http://www.google.com';
 
@@ -215,6 +215,7 @@ class App extends React.Component {
       if (!supported) {
         console.log('Can\'t handle url: ' + url);
       } else {
+        console.log(supported);
         return Linking.openURL(url);
       }
     }).catch(err => console.error('An error occurred', err));
@@ -293,9 +294,6 @@ class App extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to Location Saver!
-        </Text>
         <Text style={styles.instructions}>
           Add your location instantly or from the Map Modal
         </Text>
@@ -380,19 +378,13 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-    paddingTop: 20,
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
     paddingLeft: 10,
     paddingRight: 10,
+    paddingTop: 10
   },
   locationListContainer: {
     flex: 1,
@@ -404,7 +396,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#00998a',
     borderRadius: 5,
-    marginTop: 20
+    marginTop: 10
   },
   locationNotificationBox: {
     backgroundColor: '#f6a623',
@@ -437,7 +429,7 @@ const styles = StyleSheet.create({
   },
   smallNote: {
     'fontSize': 10,
-    'fontStyle': 'italic'
+    'fontStyle': 'italic',
   }
 });
 
