@@ -80,6 +80,7 @@ class MapModal extends React.Component {
              toolbarEnabled={false}
              moveOnMarkerPress={true}
              followsUserLocation={false}
+             showsCompass={false}
              onRegionChangeComplete={() =>
                {
                 if (this.state.firstTime === true) {
