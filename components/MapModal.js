@@ -7,6 +7,7 @@ import Promise from 'bluebird';
 class MapModal extends React.Component {
 
   state = {
+    firstTime: true,
     region: {
       latitude: this.props.initialLatitude,
       longitude: this.props.initialLongitude,
@@ -17,6 +18,10 @@ class MapModal extends React.Component {
       latitude: 'undefined',
       longitude: 'undefined'
     }
+  }
+
+  setMarkerRef = (ref) => {
+    this.marker = ref
   }
 
   componentWillReceiveProps(nextProps){
@@ -75,15 +80,25 @@ class MapModal extends React.Component {
              toolbarEnabled={false}
              moveOnMarkerPress={true}
              followsUserLocation={false}
+             onRegionChangeComplete={() =>
+               {
+                if (this.state.firstTime === true) {
+                  this.marker.showCallout();
+                  this.setState({
+                    firstTime: false
+                  })
+                }
+               }
+             }
            >
            <MapView.Marker
+             ref={this.setMarkerRef}
              draggable
              coordinate={markerLocation}
              title='Marker'
-             description='Keep pressing to move'
+             description='Keep tapping to drag'
              onDragEnd={
                (e) => {
-                 console.log('ela ous', this.state.region.latitude);
                  this.setState({
                    region: _mapView.__lastRegion,
                  });
@@ -93,7 +108,7 @@ class MapModal extends React.Component {
                      longitude: e.nativeEvent.coordinate.longitude
                    }
                  });
-                 console.log('ela ous2', this.state.region.latitude);
+                 this.marker.hideCallout();
                 //  _mapView.animateToCoordinate({
                 //    latitude: e.nativeEvent.coordinate.latitude,
                 //    longitude: e.nativeEvent.coordinate.longitude
