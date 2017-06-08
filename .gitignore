@@ -41,6 +41,6 @@ android/app/libs
 android/keystores/debug.keystore
 
 # android apk related
-android/app/build.gradle
-android/gradle.properties
+# android/app/build.gradle
+# android/gradle.properties
 android/app/my-release-key.keystore
