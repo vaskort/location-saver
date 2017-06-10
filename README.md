@@ -8,7 +8,6 @@ If you want to see what I'm doing:
 - Checkout to `clone-ready` branch
 - Install React Native CLI `npm install -g react-native-cli`
 - Run `npm install` 
-- Then `react-native run-android` or `react-native run-ios`.
 - Then run `react-native run-android` or `react-native run-ios`.
 - :star:
 
