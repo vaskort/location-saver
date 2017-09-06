@@ -9,6 +9,7 @@ If you want to see what I'm doing:
 - Install React Native CLI `npm install -g react-native-cli`
 - Run `npm install` 
 - Then run `react-native run-android` or `react-native run-ios`.
+- Open an issue if something is not correct please 
 - :star:
 
 ### You can add your own location to the list ###
