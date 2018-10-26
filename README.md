@@ -1,4 +1,3 @@
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AEU979E3ALRAA)
 # Location Saver
 An app that helps you save your location, in React Native
 
@@ -25,9 +24,5 @@ _If you have gmaps or citymapper installed you will be asked with which one you 
 ### You can also add your location to the list with the help of a map and a marker ###
 
 ![React native maps](./screenshots/locationSaver3.gif)
-
-## Donation
-If this project helped you in any way, you can buy me a beer :)  
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AEU979E3ALRAA)
 
 
